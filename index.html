@@ -217,7 +217,7 @@ function closeDetail(){
  if(typeof DEX_OPEN_TOKEN!=='undefined') DEX_OPEN_TOKEN++;
  const modal=document.getElementById('detailModal');
  const body=document.getElementById('detailBody');
- if(modal){ modal.classList.remove('show'); modal.style.display=''; }
+ if(modal){ modal.classList.remove('show'); modal.style.display='none'; }
  if(body) body.innerHTML='';
  document.body.style.overflow='';
 }
@@ -247,11 +247,16 @@ async function jpAbility(url){
 }
 let DEX_OPEN_TOKEN=0;
 async function openPokemon(i){
+ const detailModal=document.getElementById('detailModal');
+ const detailTitle=document.getElementById('detailTitle');
+ const detailBody=document.getElementById('detailBody');
+ if(!detailModal||!detailTitle||!detailBody)return;
  const token=++DEX_OPEN_TOKEN;
  const name=DEX_NAMES[i-1]||`No.${pad(i)}`;
  const nid=natId(i);
  detailTitle.textContent=`No.${pad(i)} ${name}`;
  detailModal.classList.add('show');
+ detailModal.style.display='flex';
  detailBody.innerHTML=`<div style="text-align:center;padding:30px"><img src="${spriteFor(i)}" style="width:128px;image-rendering:pixelated"><p>エメラルド図鑑データを読み込み中…</p></div>`;
 
  const cacheKey=`emeraldDexFull_v4_${nid}`;
@@ -398,7 +403,6 @@ function bootEmeraldGuide(){
 
   renderLocations();
   renderDex();
-  bindDexEvents();
   renderFlow();
   renderCatalog();
   initTypeChecker();
