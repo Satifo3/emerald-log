@@ -180,7 +180,7 @@ function spriteFor(i){
 }
 async function initHoennDex(){ return HOENN_IDS; }
 
-const DEX_LOCAL={"1": {"types": ["くさ"], "stats": [40, 45, 35, 65, 55, 70], "abilities": [["しんりょく", "HPが1/3以下になると、くさタイプの技の威力が上がる。"]], "moves": [[1, "はたく"], [1, "にらみつける"], [6, "すいとる"], [11, "でんこうせっか"], [16, "れんぞくぎり"], [21, "おいうち"], [26, "いやなおと"], [31, "リーフブレード"], [36, "こうそくいどう"], [41, "たたきつける"], [46, "みきり"], [51, "ギガドレイン"]], "places": ["最初の3匹から選ぶ"]}, "2": {"types": ["くさ"], "abilities": [["しんりょく", "HPが1/3以下になると、くさタイプの技の威力が上がる。"]], "moves": [[1, "はたく"], [1, "にらみつける"], [6, "すいとる"], [11, "でんこうせっか"], [16, "れんぞくぎり"], [17, "おいうち"], [23, "いやなおと"], [29, "リーフブレード"], [35, "こうそくいどう"], [41, "たたきつける"], [47, "みきり"], [53, "みねうち"]], "places": ["キモリをLv.16で進化"]}, "3": {"types": ["くさ"], "abilities": [["しんりょく", "HPが1/3以下になると、くさタイプの技の威力が上がる。"]], "moves": [[1, "はたく"], [1, "にらみつける"], [6, "すいとる"], [11, "でんこうせっか"], [16, "れんぞくぎり"], [17, "おいうち"], [23, "いやなおと"], [29, "リーフブレード"], [35, "こうそくいどう"], [43, "たたきつける"], [51, "みきり"], [59, "みねうち"]], "places": ["ジュプトルをLv.36で進化"]}, "38": {"types": ["ノーマル"], "stats": [150, 160, 100, 95, 65, 100], "abilities": [["なまけ", "2ターンに1回しか行動できない。"]], "places": ["ヤルキモノをLv.36で進化"]}, "39": {"types": ["エスパー"], "stats": [25, 20, 15, 105, 55, 90], "abilities": [["シンクロ", "どく・まひ・やけどになった時、相手も同じ状態異常にすることがある。"], ["せいしんりょく", "ひるまない。"]], "moves": [[1, "テレポート"], [16, "ねんりき"], [18, "かなしばり"], [21, "サイケこうせん"], [23, "リフレクター"], [25, "じこさいせい"]], "places": ["116ばんどうろ", "いしのどうくつ"]}, "40": {"types": ["エスパー"], "abilities": [["シンクロ", "状態異常を相手にも返すことがある。"], ["せいしんりょく", "ひるまない。"]], "places": ["ケーシィをLv.16で進化"]}, "41": {"types": ["エスパー"], "stats": [55, 50, 45, 135, 85, 120], "abilities": [["シンクロ", "状態異常を相手にも返すことがある。"], ["せいしんりょく", "ひるまない。"]], "moves": [[1, "ねんりき"], [1, "スプーンまげ"], [1, "テレポート"], [16, "ねんりき"], [18, "かなしばり"], [21, "サイケこうせん"], [23, "リフレクター"], [25, "じこさいせい"]], "places": ["ユンゲラーを通信交換で進化"]}};
+const DEX_LOCAL={"1":{"types":["くさ"],"stats":[40,45,35,65,55,70],"abilities":[["しんりょく","HPが1/3以下になると、くさタイプの技の威力が上がる。"]],"moves":[[1,"はたく"],[1,"にらみつける"],[6,"すいとる"],[11,"でんこうせっか"],[16,"れんぞくぎり"],[21,"おいうち"],[26,"いやなおと"],[31,"リーフブレード"],[36,"こうそくいどう"],[41,"たたきつける"],[46,"みきり"],[51,"ギガドレイン"]],"places":["最初の3匹から選ぶ"]},"2":{"types":["くさ"],"abilities":[["しんりょく","HPが1/3以下になると、くさタイプの技の威力が上がる。"]],"moves":[[1,"はたく"],[1,"にらみつける"],[6,"すいとる"],[11,"でんこうせっか"],[16,"れんぞくぎり"],[17,"おいうち"],[23,"いやなおと"],[29,"リーフブレード"],[35,"こうそくいどう"],[41,"たたきつける"],[47,"みきり"],[53,"みねうち"]],"places":["キモリをLv.16で進化"]},"3":{"types":["くさ"],"abilities":[["しんりょく","HPが1/3以下になると、くさタイプの技の威力が上がる。"]],"moves":[[1,"はたく"],[1,"にらみつける"],[6,"すいとる"],[11,"でんこうせっか"],[16,"れんぞくぎり"],[17,"おいうち"],[23,"いやなおと"],[29,"リーフブレード"],[35,"こうそくいどう"],[43,"たたきつける"],[51,"みきり"],[59,"みねうち"]],"places":["ジュプトルをLv.36で進化"]},"38":{"types":["ノーマル"],"stats":[150,160,100,95,65,100],"abilities":[["なまけ","2ターンに1回しか行動できない。"]],"places":["ヤルキモノをLv.36で進化"]},"39":{"types":["エスパー"],"stats":[25,20,15,105,55,90],"abilities":[["シンクロ","どく・まひ・やけどになった時、相手も同じ状態異常にすることがある。"],["せいしんりょく","ひるまない。"]],"moves":[[1,"テレポート"],[16,"ねんりき"],[18,"かなしばり"],[21,"サイケこうせん"],[23,"リフレクター"],[25,"じこさいせい"]],"places":["116ばんどうろ","いしのどうくつ"]},"40":{"types":["エスパー"],"abilities":[["シンクロ","状態異常を相手にも返すことがある。"],["せいしんりょく","ひるまない。"]],"places":["ケーシィをLv.16で進化"]},"41":{"types":["エスパー"],"stats":[55,50,45,135,85,120],"abilities":[["シンクロ","状態異常を相手にも返すことがある。"],["せいしんりょく","ひるまない。"]],"moves":[[1,"ねんりき"],[1,"スプーンまげ"],[1,"テレポート"],[16,"ねんりき"],[18,"かなしばり"],[21,"サイケこうせん"],[23,"リフレクター"],[25,"じこさいせい"]],"places":["ユンゲラーを通信交換で進化"]},"12":{"types":["ノーマル"],"stats":[38,30,41,30,41,60],"abilities":[["ものひろい","戦闘終了後、道具を持っていない場合に道具を拾っていることがある。エメラルドではレベルによって拾う道具が変化する。"],["くいしんぼう","第3世代のエメラルドでは使用されない後世代の特性なので、この攻略では対象外。"]],"moves":[[1,"たいあたり"],[5,"しっぽをふる"],[9,"ずつき"],[13,"すなかけ"],[17,"かぎわける"],[21,"どろあそび"],[25,"ミサイルばり"],[29,"ほしがる"],[33,"じたばた"],[37,"ねむる"],[41,"はらだいこ"]],"places":["101ばんどうろ","102ばんどうろ","103ばんどうろ","104ばんどうろ","110ばんどうろ","116ばんどうろ","117ばんどうろ","118ばんどうろ","119ばんどうろ","120ばんどうろ","121ばんどうろ"],"evo":"Lv.20でマッスグマに進化"},"13":{"types":["ノーマル"],"stats":[78,70,61,50,61,100],"abilities":[["ものひろい","戦闘終了後、道具を持っていない場合に道具を拾っていることがある。エメラルドではレベルによって拾う道具が変化する。"]],"moves":[[1,"たいあたり"],[1,"しっぽをふる"],[5,"しっぽをふる"],[9,"ずつき"],[13,"すなかけ"],[17,"かぎわける"],[23,"どろあそび"],[29,"ミサイルばり"],[35,"ほしがる"],[41,"じたばた"],[47,"ねむる"],[53,"はらだいこ"]],"places":["ジグザグマをLv.20で進化"],"evo":"進化先なし"}};
 const DEX_NAMES=["キモリ", "ジュプトル", "ジュカイン", "アチャモ", "ワカシャモ", "バシャーモ", "ミズゴロウ", "ヌマクロー", "ラグラージ", "ポチエナ", "グラエナ", "ジグザグマ", "マッスグマ", "ケムッソ", "カラサリス", "アゲハント", "マユルド", "ドクケイル", "ハスボー", "ハスブレロ", "ルンパッパ", "タネボー", "コノハナ", "ダーテング", "スバメ", "オオスバメ", "キャモメ", "ペリッパー", "ラルトス", "キルリア", "サーナイト", "アメタマ", "アメモース", "キノココ", "キノガッサ", "ナマケロ", "ヤルキモノ", "ケッキング", "ケーシィ", "ユンゲラー", "フーディン", "ツチニン", "テッカニン", "ヌケニン", "ゴニョニョ", "ドゴーム", "バクオング", "マクノシタ", "ハリテヤマ", "トサキント", "アズマオウ", "コイキング", "ギャラドス", "ルリリ", "マリル", "マリルリ", "イシツブテ", "ゴローン", "ゴローニャ", "ノズパス", "エネコ", "エネコロロ", "ズバット", "ゴルバット", "クロバット", "メノクラゲ", "ドククラゲ", "ヤミラミ", "クチート", "ココドラ", "コドラ", "ボスゴドラ", "ワンリキー", "ゴーリキー", "カイリキー", "アサナン", "チャーレム", "ラクライ", "ライボルト", "プラスル", "マイナン", "コイル", "レアコイル", "ビリリダマ", "マルマイン", "バルビート", "イルミーゼ", "ナゾノクサ", "クサイハナ", "ラフレシア", "キレイハナ", "ドードー", "ドードリオ", "ロゼリア", "ゴクリン", "マルノーム", "キバニア", "サメハダー", "ホエルコ", "ホエルオー", "ドンメル", "バクーダ", "マグマッグ", "マグカルゴ", "コータス", "ベトベター", "ベトベトン", "ドガース", "マタドガス", "バネブー", "ブーピッグ", "サンド", "サンドパン", "パッチール", "エアームド", "ナックラー", "ビブラーバ", "フライゴン", "サボネア", "ノクタス", "チルット", "チルタリス", "ザングース", "ハブネーク", "ルナトーン", "ソルロック", "ドジョッチ", "ナマズン", "ヘイガニ", "シザリガー", "ヤジロン", "ネンドール", "リリーラ", "ユレイドル", "アノプス", "アーマルド", "ププリン", "プリン", "プクリン", "ヒンバス", "ミロカロス", "ポワルン", "ヒトデマン", "スターミー", "カクレオン", "カゲボウズ", "ジュペッタ", "ヨマワル", "サマヨール", "トロピウス", "チリーン", "アブソル", "ロコン", "キュウコン", "ピチュー", "ピカチュウ", "ライチュウ", "コダック", "ゴルダック", "ソーナノ", "ソーナンス", "ネイティ", "ネイティオ", "キリンリキ", "ゴマゾウ", "ドンファン", "カイロス", "ヘラクロス", "サイホーン", "サイドン", "ユキワラシ", "オニゴーリ", "タマザラシ", "トドグラー", "トドゼルガ", "パールル", "ハンテール", "サクラビス", "ジーランス", "サニーゴ", "チョンチー", "ランターン", "ラブカス", "タッツー", "シードラ", "キングドラ", "タツベイ", "コモルー", "ボーマンダ", "ダンバル", "メタング", "メタグロス", "レジロック", "レジアイス", "レジスチル", "ラティアス", "ラティオス", "カイオーガ", "グラードン", "レックウザ", "ジラーチ", "デオキシス"];
 const CATALOG=[["攻略", "ゲーム開始～殿堂入り後攻略チャート", "メインストーリーの進行チェック"], ["攻略", "ホウエン地方 場所データ", "出現ポケモン・入手道具・トレーナー・イベント"], ["攻略", "殿堂入り後イベント", "クリア後のやり込み確認"], ["マップ", "ダンジョン全体マップ", "森・洞窟・山・アジト・海底・チャンピオンロード等"], ["マップ", "124～128番水道", "海上・水中エリアの確認"], ["ジム", "8ジム攻略", "ツツジ～アダン"], ["リーグ", "ポケモンリーグ", "カゲツ・フヨウ・プリム・ゲンジ・チャンピオン"], ["BF", "バトルフロンティア概要", "BP交換・各施設・フロンティアブレーン"], ["BF", "バトルタワー", "連勝型施設"], ["BF", "バトルドーム", "トーナメント施設"], ["BF", "バトルファクトリー", "レンタルポケモン施設"], ["BF", "バトルチューブ", "進路選択型施設"], ["BF", "バトルアリーナ", "判定ルール施設"], ["BF", "バトルパレス", "ポケモンの性格を利用する施設"], ["BF", "バトルピラミッド", "探索型施設"], ["道具", "回復", "回復系アイテム"], ["道具", "持たせる道具", "ポケモンに持たせるアイテム"], ["道具", "モンスターボール", "捕獲用ボール"], ["道具", "能力アップ", "能力関連アイテム"], ["道具", "進化どうぐ", "進化に使う道具"], ["道具", "換金・交換・その他", "その他の一般道具"], ["道具", "メール", "メールアイテム"], ["道具", "きのみ", "きのみデータ"], ["道具", "たいせつなもの", "ストーリー用重要アイテム"], ["道具", "もようがえグッズ", "ひみつきち等のグッズ"], ["道具", "わざ/ひでんマシン", "TM/HM"], ["ポケモン", "第3世代ポケモン検索", "図鑑・タイプ・データ検索"], ["ポケモン", "技一覧", "第3世代の技データ"], ["ポケモン", "技教え/BF技", "技教え人とBP技"], ["ポケモン", "特性", "第3世代の特性"], ["ポケモン", "交換の制限", "通信交換関連"], ["ポケモン", "特別なタマゴ", "特殊なタマゴ入手"], ["ポケモン", "伝説・特別ポケモン", "特殊入手ポケモン"], ["ポケモン", "点字・レジ系", "レジロック・レジアイス・レジスチル関連"], ["その他", "エントリーコール", "登録・連絡データ"], ["その他", "トレーナーカード★条件", "達成条件"], ["その他", "再戦可能トレーナー/ジム", "再戦データ"], ["その他", "エニシダに会える場所", "エニシダ関連"], ["その他", "小ネタ", "補足・小ネタ"]];
 const GYMS=[["ツツジ", "カナズミシティ", "ストーンバッジ"], ["トウキ", "ムロタウン", "ナックルバッジ"], ["テッセン", "キンセツシティ", "ダイナモバッジ"], ["アスナ", "フエンタウン", "ヒートバッジ"], ["センリ", "トウカシティ", "バランスバッジ"], ["ナギ", "ヒワマキシティ", "フェザーバッジ"], ["フウ＆ラン", "トクサネシティ", "マインドバッジ"], ["アダン", "ルネシティ", "レインバッジ"]];
@@ -238,36 +238,86 @@ async function jpAbility(url){
   return {name,desc:f}
  }catch(e){return {name:'特性',desc:'説明を読み込めませんでした。'}}
 }
-function openPokemon(i){
- const name=DEX_NAMES[i-1]||'';
- detailTitle.textContent=`No.${String(i).padStart(3,'0')} ${name}`;
- detailModal.style.display='block';
- const local=(typeof DEX_LOCAL!=='undefined'&&DEX_LOCAL[i])||{};
- const types=(local.types||[]).join(' / ')||'—';
- const stats=local.stats||[];
- const moves=local.moves||[];
+async function openPokemon(i){
+ const name=DEX_NAMES[i-1]||`No.${pad(i)}`;
+ const nid=natId(i);
+ detailTitle.textContent=`No.${pad(i)} ${name}`;
+ detailModal.classList.add('show');
+ detailBody.innerHTML=`<div style="text-align:center;padding:30px"><img src="${spriteFor(i)}" style="width:128px;image-rendering:pixelated"><p>エメラルド図鑑データを読み込み中…</p></div>`;
+
+ const cacheKey=`emeraldDexFull_v3_${nid}`;
+ let d=null;
+ try{ d=JSON.parse(localStorage.getItem(cacheKey)||'null'); }catch(e){}
+ try{
+   if(!d){
+     const [pk,sp]=await Promise.all([
+       fetch(`https://pokeapi.co/api/v2/pokemon/${nid}`).then(r=>{if(!r.ok)throw 0;return r.json()}),
+       fetch(`https://pokeapi.co/api/v2/pokemon-species/${nid}`).then(r=>{if(!r.ok)throw 0;return r.json()})
+     ]);
+     const emerald=pk.moves.map(x=>({
+       name:x.move.name,
+       det:x.version_group_details.filter(v=>v.version_group.name==='emerald')
+     })).filter(x=>x.det.length);
+
+     const abilityRows=await Promise.all(pk.abilities.map(async a=>{
+       try{
+         const z=await fetch(a.ability.url).then(r=>r.json());
+         const jn=z.names.find(n=>n.language.name==='ja-Hrkt')?.name||z.names.find(n=>n.language.name==='ja')?.name||a.ability.name;
+         const ef=z.effect_entries.find(e=>e.language.name==='en')?.short_effect||'';
+         return [jn,ef];
+       }catch(e){return [a.ability.name,''];}
+     }));
+
+     d={
+       types:pk.types.map(t=>t.type.name),
+       stats:pk.stats.map(x=>x.base_stat),
+       abilities:abilityRows,
+       moves:emerald.map(x=>[x.det[0].level_learned_at,x.name,x.det[0].move_learn_method.name]),
+       evo:sp.evolution_chain?.url||'',
+       flavor:(sp.flavor_text_entries.find(x=>x.language.name==='ja-Hrkt'&&x.version.name==='emerald')||
+               sp.flavor_text_entries.find(x=>x.language.name==='ja'&&x.version.name==='emerald')||
+               sp.flavor_text_entries.find(x=>x.language.name==='en'&&x.version.name==='emerald'))?.flavor_text||''
+     };
+     localStorage.setItem(cacheKey,JSON.stringify(d));
+   }
+ }catch(e){
+   const local=DEX_LOCAL[String(i)]||{};
+   d={
+     types:local.types||[],
+     stats:local.stats||[],
+     abilities:local.abilities||[],
+     moves:(local.moves||[]).map(x=>[x[0],x[1],'level-up']),
+     evo:local.evo||'',
+     flavor:''
+   };
+ }
+
+ const typeJP={normal:'ノーマル',fire:'ほのお',water:'みず',electric:'でんき',grass:'くさ',ice:'こおり',fighting:'かくとう',poison:'どく',ground:'じめん',flying:'ひこう',psychic:'エスパー',bug:'むし',rock:'いわ',ghost:'ゴースト',dragon:'ドラゴン',dark:'あく',steel:'はがね'};
+ const methodJP={'level-up':'レベル','machine':'わざマシン/HM','tutor':'教え技','egg':'タマゴ'};
+ const statNames=['HP','こうげき','ぼうぎょ','とくこう','とくぼう','すばやさ'];
+ const local=DEX_LOCAL[String(i)]||{};
  const places=local.places||[];
- const abilities=local.abilities||[];
+ const stats=(d.stats||[]).map((v,k)=>`<div class="item"><b>${statNames[k]||''}</b><span>${v}</span></div>`).join('');
+ const abilities=(d.abilities||[]).map(a=>`<div class="item"><div class="grow"><b>${esc(a[0])}</b>${a[1]?`<div class="muted">${esc(a[1])}</div>`:''}</div></div>`).join('');
+ const moves=(d.moves||[]).sort((a,b)=>a[0]-b[0]).map(x=>`<div class="item"><b>${x[2]==='level-up'?'Lv.'+x[0]:methodJP[x[2]]||x[2]}</b><span>${esc(x[1])}</span></div>`).join('');
+
  detailBody.innerHTML=`
- <div style="text-align:center">
-   <img style="width:144px;height:144px;image-rendering:pixelated" src="${spriteFor(i)}" onerror="this.style.display='none'">
-   <p>${types!=='—'?`<span class="tag">${esc(types)}</span>`:''}</p>
-   <button onclick="S.caught[${i}]=!S.caught[${i}];save();renderDex();openPokemon(${i})">${S.caught[i]?'✓ 捕獲済み':'＋ 捕獲する'}</button>
- </div>
- <h3>基本攻略データ</h3>
- <table class="infoTable">
-  <tr><th>ホウエン図鑑</th><td>No.${String(i).padStart(3,'0')}</td></tr>
-  <tr><th>タイプ</th><td>${esc(types)}</td></tr>
-  ${stats.length===6?`<tr><th>HP / 攻撃 / 防御</th><td>${stats.slice(0,3).join(' / ')}</td></tr><tr><th>特攻 / 特防 / 素早さ</th><td>${stats.slice(3).join(' / ')}</td></tr>`:''}
- </table>
- <h3>特性</h3>${abilities.length?abilities.map(a=>`<div class="item"><div class="grow"><b>${esc(a[0])}</b><div class="muted">${esc(a[1]||'')}</div></div></div>`).join(''):'<div class="card muted">ローカル攻略データ</div>'}
- <h3>エメラルド：レベルで覚える技</h3>
- ${moves.length?`<table class="infoTable"><tr><th>レベル</th><th>技</th></tr>${moves.map(m=>`<tr><td>Lv.${m[0]}</td><td>${esc(m[1])}</td></tr>`).join('')}</table>`:'<div class="card muted">このポケモンの技データはローカルデータベース側で管理します。</div>'}
+ <div style="text-align:center"><img src="${spriteFor(i)}" alt="${esc(name)}" style="width:150px;image-rendering:pixelated"></div>
+ <div style="text-align:center;margin:8px"><button onclick="toggleCaught(${i});openPokemon(${i})">${state.caught[i]?'✓ 捕獲済み':'+ 捕獲する'}</button></div>
+ ${d.flavor?`<div class="card">${esc(d.flavor.replace(/\f/g,' '))}</div>`:''}
+ <h3>基本データ</h3>
+ <div class="item"><b>ホウエン図鑑</b><span>No.${pad(i)}</span></div>
+ <div class="item"><b>全国図鑑</b><span>No.${String(nid).padStart(3,'0')}</span></div>
+ <div class="item"><b>タイプ</b><span>${(d.types||[]).map(t=>typeJP[t]||t).join(' / ')||'—'}</span></div>
+ <h3>種族値</h3>${stats||'<div class="item">—</div>'}
+ <h3>特性</h3>${abilities||'<div class="item">—</div>'}
+ ${local.evo?`<h3>進化</h3><div class="item"><b>${esc(local.evo)}</b></div>`:''}
+ <h3>エメラルド：覚える技</h3>${moves||'<div class="item">エメラルドでのレベル技なし</div>'}
  <h3>エメラルドでの入手・出現場所</h3>
- ${places.length?places.map(x=>`<div class="item"><div class="grow"><b>${esc(x)}</b></div></div>`).join(''):'<div class="card muted">進化・交換・イベント入手を含むローカル攻略データとして管理します。</div>'}
- <h3>自分用メモ</h3><textarea id="pokeMemo" placeholder="捕獲場所、育成、技構成など"></textarea>`;
- const el=document.getElementById('pokeMemo'),k='pokeMemo:'+i;
- el.value=S[k]||''; el.oninput=e=>{S[k]=e.target.value;save()};
+ ${places.length?places.map(x=>`<div class="item"><span>${esc(x)}</span></div>`).join(''):`<div class="item"><span>進化・交換・固定イベント等で入手</span></div>`}
+ <h3>自分用メモ</h3>
+ <textarea id="pokeMemo" placeholder="捕獲場所、育成、技構成など">${esc(state.pokeMemo[i]||'')}</textarea>
+ <button onclick="savePokeMemo(${i})">メモ保存</button>`;
 }
 function renderCatalog(){
  let q=(document.getElementById('dbSearch')?.value||'').toLowerCase();
