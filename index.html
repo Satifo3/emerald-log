@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b3d2e"><link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEABAMAAACuXLVVAAAAJ1BMVEUQgFEXuHQb0IMi45E05ZogKTFiKQC9KQD2YQDVOQBiYWL///////ahIkmJAAAB0UlEQVR42u3d0W3CMBQFUFboCl2hK3SFrtAVugIrdIWu0BU6VLGEpaenvCTQQm313B8QIfb5ujKBmMNBRERE5JyHjTxemK3xAAAA5gDkQZ92Zg8GAABgfEA18fNGKggAAMBcgLWJ23tfirRjaxAAAIA5AHnyPRPvgWQEAADAmIClydtjHPz1lLdTjinttXYsvjeOkREAAADjA/LkbfDjzkRIHAsAAGAOQCyhPsj7KccL087p5+cyAgAAGBOQS6h/ELmkgKpC6h9UYhkBAACMCVgqoapk4qKjPa/KqiojAACAcQFbJRQXGjlLiKqMAAAAxgb0AfMFyTj5xymf57TnFaKNkcsIAABgHkBVKm3Cr5SOWCovAACAeQFVWvlkQHtt6zwAAAAAAACA+QDVomNtQbJ0DAAAYF5ALpxYNtUFirVzAAAA5gH0LyyWSmVt4bG0UOm4q74xAQAA+BPAVhl1RCyfXkpr2Kt/QQEAAHBXwN4y2puqhAAAAMYErN3gcA0iFtWP77AAAAC4K6C64bFadGwtVn7tjksAAIC7A6oNEOIFyjhpnvhmOzAAAADcFGBHJgAAADs0AgAA2LEZAADAPzgAAAD4RycAgP8NEBERkX+bb4iEaeEV5LNKAAAAAElFTkSuQmCC"><link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEABAMAAACuXLVVAAAAJ1BMVEUQgFEXuHQb0IMi45E05ZogKTFiKQC9KQD2YQDVOQBiYWL///////ahIkmJAAAB0UlEQVR42u3d0W3CMBQFUFboCl2hK3SFrtAVugIrdIWu0BU6VLGEpaenvCTQQm313B8QIfb5ujKBmMNBRERE5JyHjTxemK3xAAAA5gDkQZ92Zg8GAABgfEA18fNGKggAAMBcgLWJ23tfirRjaxAAAIA5AHnyPRPvgWQEAADAmIClydtjHPz1lLdTjinttXYsvjeOkREAAADjA/LkbfDjzkRIHAsAAGAOQCyhPsj7KccL087p5+cyAgAAGBOQS6h/ELmkgKpC6h9UYhkBAACMCVgqoapk4qKjPa/KqiojAACAcQFbJRQXGjlLiKqMAAAAxgb0AfMFyTj5xymf57TnFaKNkcsIAABgHkBVKm3Cr5SOWCovAACAeQFVWvlkQHtt6zwAAAAAAACA+QDVomNtQbJ0DAAAYF5ALpxYNtUFirVzAAAA5gH0LyyWSmVt4bG0UOm4q74xAQAA+BPAVhl1RCyfXkpr2Kt/QQEAAHBXwN4y2puqhAAAAMYErN3gcA0iFtWP77AAAAC4K6C64bFadGwtVn7tjksAAIC7A6oNEOIFyjhpnvhmOzAAAADcFGBHJgAAADs0AgAA2LEZAADAPzgAAAD4RycAgP8NEBERkX+bb4iEaeEV5LNKAAAAAElFTkSuQmCC"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="EMERALD"><link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22EMERALD%20GUIDE%22%2C%22short_name%22%3A%22EMERALD%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23eef6ef%22%2C%22theme_color%22%3A%22%230b3d2e%22%7D"><title>EMERALD GUIDE</title>
+<style>
+*{box-sizing:border-box}:root{--bg:#eef6ef;--card:#fff;--ink:#14251e;--muted:#64766e;--g:#0b6b4b;--g2:#15a56f;--line:#d9e8df;--gold:#d8a62a}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;background:linear-gradient(#eaf5ee,#f7faf8);color:var(--ink);padding-bottom:88px}
+header{position:sticky;top:0;z-index:9;background:rgba(8,54,40,.94);backdrop-filter:blur(14px);color:white;padding:calc(env(safe-area-inset-top) + 12px) 16px 12px}
+header b{font-size:20px;letter-spacing:.08em} header small{display:block;opacity:.7;margin-top:3px}
+main{max-width:900px;margin:auto;padding:14px} .page{display:none}.page.on{display:block}
+.hero{background:linear-gradient(135deg,#0b6b4b,#123e34);color:#fff;border-radius:22px;padding:20px;box-shadow:0 10px 30px #0b3d2e22}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px} .card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px;box-shadow:0 4px 14px #1232}
+.card h3{margin:0 0 8px} .big{font-size:27px;font-weight:800} .muted{color:var(--muted);font-size:13px}
+button,.btn{border:0;border-radius:12px;padding:10px 13px;background:var(--g);color:#fff;font-weight:700} .ghost{background:#edf6f1;color:var(--g)}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;background:#fff;font:inherit} textarea{min-height:90px}
+.row{display:flex;gap:8px;align-items:center} .row>*{min-width:0} .grow{flex:1}
+.list{display:grid;gap:8px;margin-top:10px} .item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;gap:10px;align-items:center}
+.check{width:24px;height:24px;accent-color:var(--g)} .tag{font-size:11px;background:#e8f4ee;color:#27624c;border-radius:99px;padding:4px 8px}
+.progress{height:10px;background:#dfece5;border-radius:99px;overflow:hidden} .progress i{display:block;height:100%;background:linear-gradient(90deg,var(--g2),#59c990);width:0}
+.dex{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px} .poke{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;text-align:center;position:relative}
+.poke img{width:72px;height:72px;image-rendering:pixelated} .poke .num{font-size:11px;color:var(--muted)} .poke.caught{outline:2px solid #37a96d;background:#effaf4}
+.poke button{position:absolute;right:6px;top:6px;padding:5px 7px;border-radius:8px;font-size:11px}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:10;padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);background:rgba(255,255,255,.94);backdrop-filter:blur(15px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+nav button{background:transparent;color:#65766e;padding:7px 2px;font-size:11px}nav button.on{color:var(--g);background:#e9f5ef}nav span{display:block;font-size:20px;margin-bottom:2px}
+h2{margin:20px 2px 10px} .notice{font-size:12px;padding:10px 12px;background:#fff8dd;border:1px solid #f0dda0;border-radius:12px;margin-top:10px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}.dex{grid-template-columns:repeat(6,1fr)}}
+</style>
+</head><body>
+<header><b>EMERALD GUIDE</b><small>Pokémon Emerald personal companion</small></header>
+<main>
+<section id="home" class="page on">
+<div class="hero"><div class="muted" style="color:#bfe4d2">冒険進行度</div><div class="big"><span id="overall">0</span>%</div><div class="progress"><i id="overallBar"></i></div><p id="nextTask">次の目的を読み込み中…</p></div>
+<div class="grid">
+<div class="card"><div class="muted">攻略</div><div class="big"><span id="flowCount">0</span>/32</div></div>
+<div class="card"><div class="muted">バッジ</div><div class="big"><span id="badgeCount">0</span>/8</div></div>
+<div class="card"><div class="muted">図鑑 捕獲</div><div class="big"><span id="caughtCount">0</span>/202</div></div>
+<div class="card"><div class="muted">訪問場所</div><div class="big"><span id="locCount">0</span>/58</div></div>
+</div>
+<h2>クイックメモ</h2><div class="card"><textarea id="quickMemo" placeholder="次にやること、捕まえたいポケモンなど"></textarea></div>
+<div class="notice">データはこの端末のブラウザ内に自動保存。バックアップは「データ」からJSON書き出しできます。</div>
+</section>
+
+<section id="map" class="page"><h2>ホウエン冒険マップ</h2>
+<div class="row"><input id="locSearch" class="grow" placeholder="町・道路・洞窟を検索"><select id="locFilter" style="width:120px"><option>すべて</option><option>町</option><option>道路</option><option>水道</option><option>ダンジョン</option><option>ジム</option><option>施設</option></select></div>
+<div id="locationList" class="list"></div></section>
+
+<section id="dex" class="page"><h2>ホウエン図鑑</h2>
+<div class="row"><input id="dexSearch" class="grow" placeholder="番号・名前で検索"><select id="dexFilter" style="width:125px"><option value="all">すべて</option><option value="uncaught">未捕獲</option><option value="caught">捕獲済</option></select></div>
+<div class="notice">No.1〜202を捕獲管理。画像はオンライン時にPokéAPIの第3世代スプライトを表示します。名称データは順次内蔵可能な構造です。</div>
+<div id="dexGrid" class="dex"></div></section>
+
+<section id="guide" class="page"><h2>攻略フローチャート</h2><div id="flowList" class="list"></div>
+<h2>ジムバッジ</h2><div id="gymList" class="list"></div></section>
+
+<section id="data" class="page"><h2>データ・ツール</h2>
+<div class="card"><h3>セーブデータ</h3><p class="muted">攻略、捕獲、場所、メモをまとめて保存・移行できます。</p>
+<div class="row"><button onclick="backup()">バックアップ</button><label class="btn ghost">復元<input id="restoreFile" type="file" accept=".json" hidden></label></div></div>
+<h2>自分用ノート</h2><div class="card"><textarea id="mainMemo" placeholder="育成、技構成、出現場所メモなど"></textarea></div>
+<h2>データベース入口</h2>
+<div class="grid">
+<div class="card"><h3>道具</h3><p class="muted">回復・ボール・進化・きのみ・大切なもの</p></div>
+<div class="card"><h3>わざ</h3><p class="muted">技・わざマシン・ひでんマシン</p></div>
+<div class="card"><h3>伝説</h3><p class="muted">レックウザ・グラードン・カイオーガ・レジ系</p></div>
+<div class="card"><h3>フロンティア</h3><p class="muted">7施設の攻略記録</p></div>
+</div>
+<button class="ghost" style="margin-top:16px" onclick="resetAll()">全データ初期化</button>
+</section>
+</main>
+<nav>
+<button class="on" data-page="home"><span>⌂</span>ホーム</button><button data-page="map"><span>◇</span>MAP</button><button data-page="dex"><span>◉</span>図鑑</button><button data-page="guide"><span>✓</span>攻略</button><button data-page="data"><span>☰</span>データ</button>
+</nav>
+<script>
+const LOC=[["ミシロタウン", "町"], ["101ばんどうろ", "道路"], ["コトキタウン", "町"], ["102ばんどうろ", "道路"], ["トウカシティ", "町"], ["104ばんどうろ", "道路"], ["トウカのもり", "ダンジョン"], ["カナズミシティ", "町"], ["116ばんどうろ", "道路"], ["カナシダトンネル", "ダンジョン"], ["ムロタウン", "町"], ["いしのどうくつ", "ダンジョン"], ["カイナシティ", "町"], ["110ばんどうろ", "道路"], ["キンセツシティ", "町"], ["117ばんどうろ", "道路"], ["シダケタウン", "町"], ["111ばんどうろ", "道路"], ["112ばんどうろ", "道路"], ["ほのおのぬけみち", "ダンジョン"], ["113ばんどうろ", "道路"], ["ハジツゲタウン", "町"], ["114ばんどうろ", "道路"], ["りゅうせいのたき", "ダンジョン"], ["えんとつやま", "ダンジョン"], ["デコボコさんどう", "道路"], ["フエンタウン", "町"], ["トウカシティジム", "ジム"], ["118ばんどうろ", "道路"], ["119ばんどうろ", "道路"], ["ヒワマキシティ", "町"], ["120ばんどうろ", "道路"], ["121ばんどうろ", "道路"], ["ミナモシティ", "町"], ["おくりびやま", "ダンジョン"], ["マグマ団アジト", "ダンジョン"], ["アクア団アジト", "ダンジョン"], ["124ばんすいどう", "水道"], ["トクサネシティ", "町"], ["125ばんすいどう", "水道"], ["あさせのほらあな", "ダンジョン"], ["127ばんすいどう", "水道"], ["128ばんすいどう", "水道"], ["かいていどうくつ", "ダンジョン"], ["ルネシティ", "町"], ["126ばんすいどう", "水道"], ["129ばんすいどう", "水道"], ["130ばんすいどう", "水道"], ["131ばんすいどう", "水道"], ["キナギタウン", "町"], ["132ばんすいどう", "水道"], ["133ばんすいどう", "水道"], ["134ばんすいどう", "水道"], ["サイユウシティ", "町"], ["チャンピオンロード", "ダンジョン"], ["ポケモンリーグ", "施設"], ["そらのはしら", "ダンジョン"], ["バトルフロンティア", "施設"]];
+const FLOW=["ミシロタウンで冒険開始", "101ばんどうろを抜けコトキタウンへ", "102ばんどうろ→トウカシティ", "104ばんどうろ→トウカのもり→カナズミシティ", "カナズミジム：ツツジ", "116ばんどうろ・カナシダトンネル", "ムロタウンへ渡る", "ムロジム：トウキ", "いしのどうくつでイベント", "カイナシティへ", "110ばんどうろ→キンセツシティ", "キンセツジム：テッセン", "117ばんどうろ・シダケタウン", "111・112ばんどうろ→ほのおのぬけみち", "113ばんどうろ→ハジツゲタウン", "114ばんどうろ→りゅうせいのたき", "えんとつやま→デコボコさんどう", "フエンタウンジム：アスナ", "トウカシティジム：センリ", "118・119ばんどうろ", "ヒワマキシティジム：ナギ", "120・121ばんどうろ→ミナモシティ", "おくりびやま", "マグマ団アジト", "アクア団アジト", "トクサネシティジム：フウ＆ラン", "かいていどうくつ", "ルネシティ・そらのはしら関連イベント", "ルネシティジム：アダン", "サイユウシティ→チャンピオンロード", "四天王・チャンピオン", "殿堂入り後・バトルフロンティア"];
+const GYMS=[["ツツジ", "カナズミシティ", "ストーンバッジ"], ["トウキ", "ムロタウン", "ナックルバッジ"], ["テッセン", "キンセツシティ", "ダイナモバッジ"], ["アスナ", "フエンタウン", "ヒートバッジ"], ["センリ", "トウカシティ", "バランスバッジ"], ["ナギ", "ヒワマキシティ", "フェザーバッジ"], ["フウ＆ラン", "トクサネシティ", "マインドバッジ"], ["アダン", "ルネシティ", "レインバッジ"]];
+const KEY='emeraldGuide_v1';
+let S={flow:{},badges:{},caught:{},locations:{},quickMemo:'',mainMemo:''};
+try{S=Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+function save(){localStorage.setItem(KEY,JSON.stringify(S)); updateStats()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));document.getElementById(b.dataset.page).classList.add('on');b.classList.add('on')})
+function renderLocations(){
+ let q=document.getElementById('locSearch').value.toLowerCase(),f=document.getElementById('locFilter').value;
+ document.getElementById('locationList').innerHTML=LOC.map((x,i)=>({n:x[0],t:x[1],i})).filter(x=>(f==='すべて'||x.t===f)&&x.n.toLowerCase().includes(q)).map(x=>`<label class="item"><input class="check" type="checkbox" ${S.locations[x.i]?'checked':''} onchange="S.locations[${x.i}]=this.checked;save()"><div class="grow"><b>${esc(x.n)}</b><div class="muted">訪問・確認済みにする</div></div><span class="tag">${x.t}</span></label>`).join('')
+}
+function renderFlow(){
+ document.getElementById('flowList').innerHTML=FLOW.map((x,i)=>`<label class="item"><input class="check" type="checkbox" ${S.flow[i]?'checked':''} onchange="S.flow[${i}]=this.checked;save()"><div><span class="tag">STEP ${i+1}</span> <b>${esc(x)}</b></div></label>`).join('')
+ document.getElementById('gymList').innerHTML=GYMS.map((x,i)=>`<label class="item"><input class="check" type="checkbox" ${S.badges[i]?'checked':''} onchange="S.badges[${i}]=this.checked;save()"><div class="grow"><b>${esc(x[0])}</b><div class="muted">${esc(x[1])}</div></div><span class="tag">${esc(x[2])}</span></label>`).join('')
+}
+function renderDex(){
+ let q=document.getElementById('dexSearch').value.trim().toLowerCase(),f=document.getElementById('dexFilter').value;
+ let arr=[]; for(let i=1;i<=202;i++){let c=!!S.caught[i]; if(f==='caught'&&!c||f==='uncaught'&&c)continue;if(q && !String(i).includes(q))continue;arr.push(i)}
+ document.getElementById('dexGrid').innerHTML=arr.map(i=>`<div class="poke ${S.caught[i]?'caught':''}"><button onclick="S.caught[${i}]=!S.caught[${i}];save();renderDex()">${S.caught[i]?'✓':'＋'}</button><img loading="lazy" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iii/emerald/${i}.png" onerror="this.style.opacity=.15"><div class="num">No.${String(i).padStart(3,'0')}</div><b>POKÉMON ${i}</b></div>`).join('')
+}
+function updateStats(){
+ let fc=Object.values(S.flow).filter(Boolean).length,bc=Object.values(S.badges).filter(Boolean).length,cc=Object.values(S.caught).filter(Boolean).length,lc=Object.values(S.locations).filter(Boolean).length;
+ flowCount.textContent=fc;badgeCount.textContent=bc;caughtCount.textContent=cc;locCount.textContent=lc;
+ let p=Math.round(((fc/FLOW.length)+(bc/8)+(cc/202)+(lc/LOC.length))/4*100);overall.textContent=p;overallBar.style.width=p+'%';
+ let ni=FLOW.findIndex((_,i)=>!S.flow[i]);nextTask.textContent=ni<0?'メイン攻略完了！殿堂入り後を楽しもう。':'NEXT：'+FLOW[ni]
+}
+quickMemo.value=S.quickMemo;mainMemo.value=S.mainMemo;
+quickMemo.oninput=e=>{S.quickMemo=e.target.value;save()};mainMemo.oninput=e=>{S.mainMemo=e.target.value;save()}
+locSearch.oninput=renderLocations;locFilter.onchange=renderLocations;dexSearch.oninput=renderDex;dexFilter.onchange=renderDex;
+function backup(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,2)],{type:'application/json'}));a.download='emerald-guide-backup.json';a.click();URL.revokeObjectURL(a.href)}
+restoreFile.onchange=e=>{let r=new FileReader();r.onload=()=>{try{S=JSON.parse(r.result);save();renderLocations();renderFlow();renderDex();quickMemo.value=S.quickMemo||'';mainMemo.value=S.mainMemo||'';alert('復元しました')}catch(_ ){alert('バックアップファイルを読み込めません')}};r.readAsText(e.target.files[0])}
+function resetAll(){if(confirm('攻略・捕獲・メモをすべて初期化しますか？')){localStorage.removeItem(KEY);location.reload()}}
+renderLocations();renderFlow();renderDex();updateStats();
+</script></body></html>
