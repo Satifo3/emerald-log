@@ -187,6 +187,7 @@ const GYMS=[["ツツジ", "カナズミシティ", "ストーンバッジ"], ["�
 const KEY='emeraldGuide_v1';
 let S={flow:{},badges:{},caught:{},locations:{},quickMemo:'',mainMemo:''};
 try{S=Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+if(!S.pokeMemo)S.pokeMemo={};
 function save(){localStorage.setItem(KEY,JSON.stringify(S)); updateStats()}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));document.getElementById(b.dataset.page).classList.add('on');b.classList.add('on')})
@@ -245,6 +246,19 @@ async function jpAbility(url){
   return {name,desc:f}
  }catch(e){return {name:'特性',desc:'説明を読み込めませんでした。'}}
 }
+
+function toggleCaught(i){
+ S.caught[i]=!S.caught[i];
+ save();
+ renderDex();
+}
+function savePokeMemo(i){
+ if(!S.pokeMemo) S.pokeMemo={};
+ const el=document.getElementById('pokeMemo');
+ S.pokeMemo[i]=el?el.value:'';
+ save();
+}
+
 let DEX_OPEN_TOKEN=0;
 async function openPokemon(i){
  const detailModal=document.getElementById('detailModal');
@@ -252,9 +266,9 @@ async function openPokemon(i){
  const detailBody=document.getElementById('detailBody');
  if(!detailModal||!detailTitle||!detailBody)return;
  const token=++DEX_OPEN_TOKEN;
- const name=DEX_NAMES[i-1]||`No.${pad(i)}`;
+ const name=DEX_NAMES[i-1]||`No.${String(i).padStart(3,'0')}`;
  const nid=natId(i);
- detailTitle.textContent=`No.${pad(i)} ${name}`;
+ detailTitle.textContent=`No.${String(i).padStart(3,'0')} ${name}`;
  detailModal.classList.add('show');
  detailModal.style.display='flex';
  detailBody.innerHTML=`<div style="text-align:center;padding:30px"><img src="${spriteFor(i)}" style="width:128px;image-rendering:pixelated"><p>エメラルド図鑑データを読み込み中…</p></div>`;
@@ -323,10 +337,10 @@ async function openPokemon(i){
  if(token!==DEX_OPEN_TOKEN)return;
  detailBody.innerHTML=`
  <div style="text-align:center"><img src="${spriteFor(i)}" alt="${esc(name)}" style="width:150px;image-rendering:pixelated"></div>
- <div style="text-align:center;margin:8px"><button onclick="toggleCaught(${i});openPokemon(${i})">${state.caught[i]?'✓ 捕獲済み':'+ 捕獲する'}</button></div>
+ <div style="text-align:center;margin:8px"><button onclick="toggleCaught(${i});openPokemon(${i})">${S.caught[i]?'✓ 捕獲済み':'+ 捕獲する'}</button></div>
  ${d.flavor?`<div class="card">${esc(d.flavor.replace(/\f/g,' '))}</div>`:''}
  <h3>基本データ</h3>
- <div class="item"><b>ホウエン図鑑</b><span>No.${pad(i)}</span></div>
+ <div class="item"><b>ホウエン図鑑</b><span>No.${String(i).padStart(3,'0')}</span></div>
  <div class="item"><b>全国図鑑</b><span>No.${String(nid).padStart(3,'0')}</span></div>
  <div class="item"><b>タイプ</b><span>${(d.types||[]).map(t=>typeJP[t]||t).join(' / ')||'—'}</span></div>
  <h3>種族値</h3>${stats||'<div class="item">—</div>'}
@@ -336,7 +350,7 @@ async function openPokemon(i){
  <h3>エメラルドでの入手・出現場所</h3>
  ${places.length?places.map(x=>`<div class="item"><span>${esc(x)}</span></div>`).join(''):`<div class="item"><span>進化・交換・固定イベント等で入手</span></div>`}
  <h3>自分用メモ</h3>
- <textarea id="pokeMemo" placeholder="捕獲場所、育成、技構成など">${esc(state.pokeMemo[i]||'')}</textarea>
+ <textarea id="pokeMemo" placeholder="捕獲場所、育成、技構成など">${esc((S.pokeMemo||{})[i]||'')}</textarea>
  <button onclick="savePokeMemo(${i})">メモ保存</button>`;
 }
 function renderCatalog(){
