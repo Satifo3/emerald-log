@@ -178,7 +178,7 @@ function spriteFor(i){
  const id=natId(i);
  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iii/emerald/${id}.png`;
 }
-async function initHoennDex(){ return HOENN_IDS; }
+
 
 const DEX_LOCAL={"1":{"types":["くさ"],"stats":[40,45,35,65,55,70],"abilities":[["しんりょく","HPが1/3以下になると、くさタイプの技の威力が上がる。"]],"moves":[[1,"はたく"],[1,"にらみつける"],[6,"すいとる"],[11,"でんこうせっか"],[16,"れんぞくぎり"],[21,"おいうち"],[26,"いやなおと"],[31,"リーフブレード"],[36,"こうそくいどう"],[41,"たたきつける"],[46,"みきり"],[51,"ギガドレイン"]],"places":["最初の3匹から選ぶ"]},"2":{"types":["くさ"],"abilities":[["しんりょく","HPが1/3以下になると、くさタイプの技の威力が上がる。"]],"moves":[[1,"はたく"],[1,"にらみつける"],[6,"すいとる"],[11,"でんこうせっか"],[16,"れんぞくぎり"],[17,"おいうち"],[23,"いやなおと"],[29,"リーフブレード"],[35,"こうそくいどう"],[41,"たたきつける"],[47,"みきり"],[53,"みねうち"]],"places":["キモリをLv.16で進化"]},"3":{"types":["くさ"],"abilities":[["しんりょく","HPが1/3以下になると、くさタイプの技の威力が上がる。"]],"moves":[[1,"はたく"],[1,"にらみつける"],[6,"すいとる"],[11,"でんこうせっか"],[16,"れんぞくぎり"],[17,"おいうち"],[23,"いやなおと"],[29,"リーフブレード"],[35,"こうそくいどう"],[43,"たたきつける"],[51,"みきり"],[59,"みねうち"]],"places":["ジュプトルをLv.36で進化"]},"38":{"types":["ノーマル"],"stats":[150,160,100,95,65,100],"abilities":[["なまけ","2ターンに1回しか行動できない。"]],"places":["ヤルキモノをLv.36で進化"]},"39":{"types":["エスパー"],"stats":[25,20,15,105,55,90],"abilities":[["シンクロ","どく・まひ・やけどになった時、相手も同じ状態異常にすることがある。"],["せいしんりょく","ひるまない。"]],"moves":[[1,"テレポート"],[16,"ねんりき"],[18,"かなしばり"],[21,"サイケこうせん"],[23,"リフレクター"],[25,"じこさいせい"]],"places":["116ばんどうろ","いしのどうくつ"]},"40":{"types":["エスパー"],"abilities":[["シンクロ","状態異常を相手にも返すことがある。"],["せいしんりょく","ひるまない。"]],"places":["ケーシィをLv.16で進化"]},"41":{"types":["エスパー"],"stats":[55,50,45,135,85,120],"abilities":[["シンクロ","状態異常を相手にも返すことがある。"],["せいしんりょく","ひるまない。"]],"moves":[[1,"ねんりき"],[1,"スプーンまげ"],[1,"テレポート"],[16,"ねんりき"],[18,"かなしばり"],[21,"サイケこうせん"],[23,"リフレクター"],[25,"じこさいせい"]],"places":["ユンゲラーを通信交換で進化"]},"12":{"types":["ノーマル"],"stats":[38,30,41,30,41,60],"abilities":[["ものひろい","戦闘終了後、道具を持っていない場合に道具を拾っていることがある。エメラルドではレベルによって拾う道具が変化する。"],["くいしんぼう","第3世代のエメラルドでは使用されない後世代の特性なので、この攻略では対象外。"]],"moves":[[1,"たいあたり"],[5,"しっぽをふる"],[9,"ずつき"],[13,"すなかけ"],[17,"かぎわける"],[21,"どろあそび"],[25,"ミサイルばり"],[29,"ほしがる"],[33,"じたばた"],[37,"ねむる"],[41,"はらだいこ"]],"places":["101ばんどうろ","102ばんどうろ","103ばんどうろ","104ばんどうろ","110ばんどうろ","116ばんどうろ","117ばんどうろ","118ばんどうろ","119ばんどうろ","120ばんどうろ","121ばんどうろ"],"evo":"Lv.20でマッスグマに進化"},"13":{"types":["ノーマル"],"stats":[78,70,61,50,61,100],"abilities":[["ものひろい","戦闘終了後、道具を持っていない場合に道具を拾っていることがある。エメラルドではレベルによって拾う道具が変化する。"]],"moves":[[1,"たいあたり"],[1,"しっぽをふる"],[5,"しっぽをふる"],[9,"ずつき"],[13,"すなかけ"],[17,"かぎわける"],[23,"どろあそび"],[29,"ミサイルばり"],[35,"ほしがる"],[41,"じたばた"],[47,"ねむる"],[53,"はらだいこ"]],"places":["ジグザグマをLv.20で進化"],"evo":"進化先なし"}};
 const DEX_NAMES=["キモリ", "ジュプトル", "ジュカイン", "アチャモ", "ワカシャモ", "バシャーモ", "ミズゴロウ", "ヌマクロー", "ラグラージ", "ポチエナ", "グラエナ", "ジグザグマ", "マッスグマ", "ケムッソ", "カラサリス", "アゲハント", "マユルド", "ドクケイル", "ハスボー", "ハスブレロ", "ルンパッパ", "タネボー", "コノハナ", "ダーテング", "スバメ", "オオスバメ", "キャモメ", "ペリッパー", "ラルトス", "キルリア", "サーナイト", "アメタマ", "アメモース", "キノココ", "キノガッサ", "ナマケロ", "ヤルキモノ", "ケッキング", "ケーシィ", "ユンゲラー", "フーディン", "ツチニン", "テッカニン", "ヌケニン", "ゴニョニョ", "ドゴーム", "バクオング", "マクノシタ", "ハリテヤマ", "トサキント", "アズマオウ", "コイキング", "ギャラドス", "ルリリ", "マリル", "マリルリ", "イシツブテ", "ゴローン", "ゴローニャ", "ノズパス", "エネコ", "エネコロロ", "ズバット", "ゴルバット", "クロバット", "メノクラゲ", "ドククラゲ", "ヤミラミ", "クチート", "ココドラ", "コドラ", "ボスゴドラ", "ワンリキー", "ゴーリキー", "カイリキー", "アサナン", "チャーレム", "ラクライ", "ライボルト", "プラスル", "マイナン", "コイル", "レアコイル", "ビリリダマ", "マルマイン", "バルビート", "イルミーゼ", "ナゾノクサ", "クサイハナ", "ラフレシア", "キレイハナ", "ドードー", "ドードリオ", "ロゼリア", "ゴクリン", "マルノーム", "キバニア", "サメハダー", "ホエルコ", "ホエルオー", "ドンメル", "バクーダ", "マグマッグ", "マグカルゴ", "コータス", "ベトベター", "ベトベトン", "ドガース", "マタドガス", "バネブー", "ブーピッグ", "サンド", "サンドパン", "パッチール", "エアームド", "ナックラー", "ビブラーバ", "フライゴン", "サボネア", "ノクタス", "チルット", "チルタリス", "ザングース", "ハブネーク", "ルナトーン", "ソルロック", "ドジョッチ", "ナマズン", "ヘイガニ", "シザリガー", "ヤジロン", "ネンドール", "リリーラ", "ユレイドル", "アノプス", "アーマルド", "ププリン", "プリン", "プクリン", "ヒンバス", "ミロカロス", "ポワルン", "ヒトデマン", "スターミー", "カクレオン", "カゲボウズ", "ジュペッタ", "ヨマワル", "サマヨール", "トロピウス", "チリーン", "アブソル", "ロコン", "キュウコン", "ピチュー", "ピカチュウ", "ライチュウ", "コダック", "ゴルダック", "ソーナノ", "ソーナンス", "ネイティ", "ネイティオ", "キリンリキ", "ゴマゾウ", "ドンファン", "カイロス", "ヘラクロス", "サイホーン", "サイドン", "ユキワラシ", "オニゴーリ", "タマザラシ", "トドグラー", "トドゼルガ", "パールル", "ハンテール", "サクラビス", "ジーランス", "サニーゴ", "チョンチー", "ランターン", "ラブカス", "タッツー", "シードラ", "キングドラ", "タツベイ", "コモルー", "ボーマンダ", "ダンバル", "メタング", "メタグロス", "レジロック", "レジアイス", "レジスチル", "ラティアス", "ラティオス", "カイオーガ", "グラードン", "レックウザ", "ジラーチ", "デオキシス"];
@@ -213,7 +213,14 @@ function openLocation(n){
  let k='locMemo:'+n; setTimeout(()=>{if(window.locMemo){locMemo.value=S[k]||'';locMemo.oninput=e=>{S[k]=e.target.value;save()}}},0);
  detailModal.style.display='block'
 }
-function closeDetail(){detailModal.style.display='none'}
+function closeDetail(){
+ if(typeof DEX_OPEN_TOKEN!=='undefined') DEX_OPEN_TOKEN++;
+ const modal=document.getElementById('detailModal');
+ const body=document.getElementById('detailBody');
+ if(modal){ modal.classList.remove('show'); modal.style.display=''; }
+ if(body) body.innerHTML='';
+ document.body.style.overflow='';
+}
 function renderFlow(){
  document.getElementById('flowList').innerHTML=FLOW.map((x,i)=>{
    let loc=LOC.find(z=>x.includes(z[0]))?.[0]||'';
@@ -238,14 +245,16 @@ async function jpAbility(url){
   return {name,desc:f}
  }catch(e){return {name:'特性',desc:'説明を読み込めませんでした。'}}
 }
+let DEX_OPEN_TOKEN=0;
 async function openPokemon(i){
+ const token=++DEX_OPEN_TOKEN;
  const name=DEX_NAMES[i-1]||`No.${pad(i)}`;
  const nid=natId(i);
  detailTitle.textContent=`No.${pad(i)} ${name}`;
  detailModal.classList.add('show');
  detailBody.innerHTML=`<div style="text-align:center;padding:30px"><img src="${spriteFor(i)}" style="width:128px;image-rendering:pixelated"><p>エメラルド図鑑データを読み込み中…</p></div>`;
 
- const cacheKey=`emeraldDexFull_v3_${nid}`;
+ const cacheKey=`emeraldDexFull_v4_${nid}`;
  let d=null;
  try{ d=JSON.parse(localStorage.getItem(cacheKey)||'null'); }catch(e){}
  try{
@@ -292,7 +301,12 @@ async function openPokemon(i){
    };
  }
 
- const typeJP={normal:'ノーマル',fire:'ほのお',water:'みず',electric:'でんき',grass:'くさ',ice:'こおり',fighting:'かくとう',poison:'どく',ground:'じめん',flying:'ひこう',psychic:'エスパー',bug:'むし',rock:'いわ',ghost:'ゴースト',dragon:'ドラゴン',dark:'あく',steel:'はがね'};
+ if(token!==DEX_OPEN_TOKEN)return;
+ if(!(d.types&&d.types.length) || !(d.stats&&d.stats.length)){
+   detailBody.innerHTML=`<div style="text-align:center"><img src="${spriteFor(i)}" style="width:150px;image-rendering:pixelated"><div class="card"><b>図鑑データの取得に失敗しました</b><p class="muted">再読み込みするとこのポケモンのデータをもう一度取得します。</p><button onclick="openPokemon(${i})">再読み込み</button></div></div>`;
+   return;
+ }
+  const typeJP={normal:'ノーマル',fire:'ほのお',water:'みず',electric:'でんき',grass:'くさ',ice:'こおり',fighting:'かくとう',poison:'どく',ground:'じめん',flying:'ひこう',psychic:'エスパー',bug:'むし',rock:'いわ',ghost:'ゴースト',dragon:'ドラゴン',dark:'あく',steel:'はがね'};
  const methodJP={'level-up':'レベル','machine':'わざマシン/HM','tutor':'教え技','egg':'タマゴ'};
  const statNames=['HP','こうげき','ぼうぎょ','とくこう','とくぼう','すばやさ'];
  const local=DEX_LOCAL[String(i)]||{};
@@ -301,6 +315,7 @@ async function openPokemon(i){
  const abilities=(d.abilities||[]).map(a=>`<div class="item"><div class="grow"><b>${esc(a[0])}</b>${a[1]?`<div class="muted">${esc(a[1])}</div>`:''}</div></div>`).join('');
  const moves=(d.moves||[]).sort((a,b)=>a[0]-b[0]).map(x=>`<div class="item"><b>${x[2]==='level-up'?'Lv.'+x[0]:methodJP[x[2]]||x[2]}</b><span>${esc(x[1])}</span></div>`).join('');
 
+ if(token!==DEX_OPEN_TOKEN)return;
  detailBody.innerHTML=`
  <div style="text-align:center"><img src="${spriteFor(i)}" alt="${esc(name)}" style="width:150px;image-rendering:pixelated"></div>
  <div style="text-align:center;margin:8px"><button onclick="toggleCaught(${i});openPokemon(${i})">${state.caught[i]?'✓ 捕獲済み':'+ 捕獲する'}</button></div>
@@ -350,6 +365,19 @@ function renderTypeCheckerFor(aid,bid,rid){
 function renderTypeChecker(){ renderTypeCheckerFor('type1','type2','typeResult'); }
 
 
+
+function bindDexEvents(){
+ const grid=document.getElementById('dexGrid');
+ if(!grid || grid.dataset.bound==='1') return;
+ grid.dataset.bound='1';
+ grid.addEventListener('click',e=>{
+   const card=e.target.closest('[data-dex-index]');
+   if(!card) return;
+   const i=Number(card.dataset.dexIndex);
+   if(i>=1&&i<=202) openPokemon(i);
+ });
+}
+
 function bootEmeraldGuide(){
   // Explicit element refs: do not depend on Safari creating globals from element IDs.
   window.detailModal=document.getElementById('detailModal');
@@ -370,6 +398,7 @@ function bootEmeraldGuide(){
 
   renderLocations();
   renderDex();
+  bindDexEvents();
   renderFlow();
   renderCatalog();
   initTypeChecker();
@@ -377,7 +406,6 @@ function bootEmeraldGuide(){
 
   // Correct Hoenn->National sprite mapping is an enhancement only.
   // The visible UI never waits for this request.
-  initHoennDex().catch(()=>{});
 }
 if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded',bootEmeraldGuide,{once:true});
