@@ -259,6 +259,21 @@ function savePokeMemo(i){
  save();
 }
 
+
+const TYPE_JP={normal:'ノーマル',fire:'ほのお',water:'みず',electric:'でんき',grass:'くさ',ice:'こおり',fighting:'かくとう',poison:'どく',ground:'じめん',flying:'ひこう',psychic:'エスパー',bug:'むし',rock:'いわ',ghost:'ゴースト',dragon:'ドラゴン',dark:'あく',steel:'はがね'};
+const MOVE_JP={
+ tackle:'たいあたり','tail-whip':'しっぽをふる',growl:'なきごえ',ember:'ひのこ',
+ 'double-kick':'にどげり','sand-attack':'すなかけ',peck:'つつく','bulk-up':'ビルドアップ',
+ 'focus-energy':'きあいだめ',slash:'きりさく','mirror-move':'オウムがえし',
+ 'sky-uppercut':'スカイアッパー','quick-attack':'でんこうせっか','water-gun':'みずでっぽう',
+ 'mud-slap':'どろかけ','bide':'がまん','mud-shot':'マッドショット','foresight':'みやぶる',
+ 'mud-sport':'どろあそび','take-down':'とっしん','whirlpool':'うずしお','protect':'まもる',
+ 'hydro-pump':'ハイドロポンプ','endeavor':'がむしゃら','headbutt':'ずつき',
+ 'pin-missile':'ミサイルばり',covet:'ほしがる',flail:'じたばた',rest:'ねむる',
+ 'belly-drum':'はらだいこ'
+};
+function moveJP(n){return MOVE_JP[n]||n.replaceAll('-',' ');}
+
 let DEX_OPEN_TOKEN=0;
 async function openPokemon(i){
  const detailModal=document.getElementById('detailModal');
@@ -273,7 +288,7 @@ async function openPokemon(i){
  detailModal.style.display='flex';
  detailBody.innerHTML=`<div style="text-align:center;padding:30px"><img src="${spriteFor(i)}" style="width:128px;image-rendering:pixelated"><p>エメラルド図鑑データを読み込み中…</p></div>`;
 
- const cacheKey=`emeraldDexFull_v4_${nid}`;
+ const cacheKey=`emeraldDexFull_v5_${nid}`;
  let d=null;
  try{ d=JSON.parse(localStorage.getItem(cacheKey)||'null'); }catch(e){}
  try{
@@ -291,9 +306,9 @@ async function openPokemon(i){
        try{
          const z=await fetch(a.ability.url).then(r=>r.json());
          const jn=z.names.find(n=>n.language.name==='ja-Hrkt')?.name||z.names.find(n=>n.language.name==='ja')?.name||a.ability.name;
-         const ef=z.effect_entries.find(e=>e.language.name==='en')?.short_effect||'';
-         return [jn,ef];
-       }catch(e){return [a.ability.name,''];}
+         const ef='';
+         return [ABILITY_JP[a.ability.name]||jn,ef];
+       }catch(e){return [ABILITY_JP[a.ability.name]||a.ability.name,''];}
      }));
 
      d={
@@ -302,9 +317,7 @@ async function openPokemon(i){
        abilities:abilityRows,
        moves:emerald.map(x=>[x.det[0].level_learned_at,x.name,x.det[0].move_learn_method.name]),
        evo:sp.evolution_chain?.url||'',
-       flavor:(sp.flavor_text_entries.find(x=>x.language.name==='ja-Hrkt'&&x.version.name==='emerald')||
-               sp.flavor_text_entries.find(x=>x.language.name==='ja'&&x.version.name==='emerald')||
-               sp.flavor_text_entries.find(x=>x.language.name==='en'&&x.version.name==='emerald'))?.flavor_text||''
+       flavor:(sp.flavor_text_entries.find(x=>(x.language.name==='ja-Hrkt'||x.language.name==='ja')&&x.version.name==='emerald'))?.flavor_text||''
      };
      localStorage.setItem(cacheKey,JSON.stringify(d));
    }
@@ -325,14 +338,13 @@ async function openPokemon(i){
    detailBody.innerHTML=`<div style="text-align:center"><img src="${spriteFor(i)}" style="width:150px;image-rendering:pixelated"><div class="card"><b>図鑑データの取得に失敗しました</b><p class="muted">再読み込みするとこのポケモンのデータをもう一度取得します。</p><button onclick="openPokemon(${i})">再読み込み</button></div></div>`;
    return;
  }
-  const typeJP={normal:'ノーマル',fire:'ほのお',water:'みず',electric:'でんき',grass:'くさ',ice:'こおり',fighting:'かくとう',poison:'どく',ground:'じめん',flying:'ひこう',psychic:'エスパー',bug:'むし',rock:'いわ',ghost:'ゴースト',dragon:'ドラゴン',dark:'あく',steel:'はがね'};
- const methodJP={'level-up':'レベル','machine':'わざマシン/HM','tutor':'教え技','egg':'タマゴ'};
+  const methodJP={'level-up':'レベル','machine':'わざマシン/HM','tutor':'教え技','egg':'タマゴ'};
  const statNames=['HP','こうげき','ぼうぎょ','とくこう','とくぼう','すばやさ'];
  const local=DEX_LOCAL[String(i)]||{};
  const places=local.places||[];
  const stats=(d.stats||[]).map((v,k)=>`<div class="item"><b>${statNames[k]||''}</b><span>${v}</span></div>`).join('');
  const abilities=(d.abilities||[]).map(a=>`<div class="item"><div class="grow"><b>${esc(a[0])}</b>${a[1]?`<div class="muted">${esc(a[1])}</div>`:''}</div></div>`).join('');
- const moves=(d.moves||[]).sort((a,b)=>a[0]-b[0]).map(x=>`<div class="item"><b>${x[2]==='level-up'?'Lv.'+x[0]:methodJP[x[2]]||x[2]}</b><span>${esc(x[1])}</span></div>`).join('');
+ const moves=(d.moves||[]).sort((a,b)=>a[0]-b[0]).map(x=>`<div class="item"><b>${x[2]==='level-up'?'Lv.'+x[0]:methodJP[x[2]]||x[2]}</b><span>${esc(moveJP(x[1]))}</span></div>`).join('');
 
  if(token!==DEX_OPEN_TOKEN)return;
  detailBody.innerHTML=`
@@ -342,7 +354,7 @@ async function openPokemon(i){
  <h3>基本データ</h3>
  <div class="item"><b>ホウエン図鑑</b><span>No.${String(i).padStart(3,'0')}</span></div>
  <div class="item"><b>全国図鑑</b><span>No.${String(nid).padStart(3,'0')}</span></div>
- <div class="item"><b>タイプ</b><span>${(d.types||[]).map(t=>typeJP[t]||t).join(' / ')||'—'}</span></div>
+ <div class="item"><b>タイプ</b><span>${(d.types||[]).map(t=>TYPE_JP[t]||t).join(' / ')||'—'}</span></div>
  <h3>種族値</h3>${stats||'<div class="item">—</div>'}
  <h3>特性</h3>${abilities||'<div class="item">—</div>'}
  ${local.evo?`<h3>進化</h3><div class="item"><b>${esc(local.evo)}</b></div>`:''}
