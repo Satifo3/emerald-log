@@ -21,6 +21,12 @@ input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);borde
 .dex{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px} .poke{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;text-align:center;position:relative}
 .poke img{width:72px;height:72px;image-rendering:pixelated} .poke .num{font-size:11px;color:var(--muted)} .poke.caught{outline:2px solid #37a96d;background:#effaf4}
 .poke button{position:absolute;right:6px;top:6px;padding:5px 7px;border-radius:8px;font-size:11px}
+.mapframe{width:100%;height:58vh;border:1px solid var(--line);border-radius:14px;background:white}
+.tabs{display:flex;gap:6px;overflow:auto;margin:10px 0}.tabs button{white-space:nowrap}
+.infoTable{width:100%;border-collapse:collapse}.infoTable td,.infoTable th{padding:8px;border-bottom:1px solid var(--line);text-align:left}
+.flowCard{background:#fff;border:1px solid var(--line);border-radius:17px;padding:15px;margin:9px 0}
+.flowNum{display:inline-block;background:#e8f4ee;color:#27624c;border-radius:99px;padding:5px 9px;font-size:12px;margin-right:7px}
+.loading{padding:22px;text-align:center;color:var(--muted)}
 nav{position:fixed;bottom:0;left:0;right:0;z-index:10;padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);background:rgba(255,255,255,.94);backdrop-filter:blur(15px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
 nav button{background:transparent;color:#65766e;padding:7px 2px;font-size:11px}nav button.on{color:var(--g);background:#e9f5ef}nav span{display:block;font-size:20px;margin-bottom:2px}
 h2{margin:20px 2px 10px} .notice{font-size:12px;padding:10px 12px;background:#fff8dd;border:1px solid #f0dda0;border-radius:12px;margin-top:10px}
@@ -47,7 +53,7 @@ h2{margin:20px 2px 10px} .notice{font-size:12px;padding:10px 12px;background:#ff
 
 <section id="dex" class="page"><h2>ホウエン図鑑</h2>
 <div class="row"><input id="dexSearch" class="grow" placeholder="番号・名前で検索"><select id="dexFilter" style="width:125px"><option value="all">すべて</option><option value="uncaught">未捕獲</option><option value="caught">捕獲済</option></select></div>
-<div class="notice">No.1〜202を捕獲管理。画像はオンライン時にPokéAPIの第3世代スプライトを表示します。ホウエン図鑑名を内蔵。捕獲状態と個別メモを保存できます。</div>
+<div class="notice">エメラルドのホウエン図鑑順。ドット絵はホウエン図鑑番号→全国図鑑番号を照合して表示します。ポケモンをタップすると、エメラルドでのレベル技・出現場所・能力を確認できます。</div>
 <div id="dexGrid" class="dex"></div></section>
 
 <section id="guide" class="page"><h2>攻略フローチャート</h2><div id="flowList" class="list"></div>
@@ -80,6 +86,27 @@ h2{margin:20px 2px 10px} .notice{font-size:12px;padding:10px 12px;background:#ff
 const LOC=[["ミシロタウン", "町"], ["101ばんどうろ", "道路"], ["コトキタウン", "町"], ["102ばんどうろ", "道路"], ["トウカシティ", "町"], ["104ばんどうろ", "道路"], ["トウカのもり", "ダンジョン"], ["カナズミシティ", "町"], ["116ばんどうろ", "道路"], ["カナシダトンネル", "ダンジョン"], ["ムロタウン", "町"], ["いしのどうくつ", "ダンジョン"], ["カイナシティ", "町"], ["110ばんどうろ", "道路"], ["キンセツシティ", "町"], ["117ばんどうろ", "道路"], ["シダケタウン", "町"], ["111ばんどうろ", "道路"], ["112ばんどうろ", "道路"], ["ほのおのぬけみち", "ダンジョン"], ["113ばんどうろ", "道路"], ["ハジツゲタウン", "町"], ["114ばんどうろ", "道路"], ["りゅうせいのたき", "ダンジョン"], ["えんとつやま", "ダンジョン"], ["デコボコさんどう", "道路"], ["フエンタウン", "町"], ["トウカシティジム", "ジム"], ["118ばんどうろ", "道路"], ["119ばんどうろ", "道路"], ["ヒワマキシティ", "町"], ["120ばんどうろ", "道路"], ["121ばんどうろ", "道路"], ["ミナモシティ", "町"], ["おくりびやま", "ダンジョン"], ["マグマ団アジト", "ダンジョン"], ["アクア団アジト", "ダンジョン"], ["124ばんすいどう", "水道"], ["トクサネシティ", "町"], ["125ばんすいどう", "水道"], ["あさせのほらあな", "ダンジョン"], ["127ばんすいどう", "水道"], ["128ばんすいどう", "水道"], ["かいていどうくつ", "ダンジョン"], ["ルネシティ", "町"], ["126ばんすいどう", "水道"], ["129ばんすいどう", "水道"], ["130ばんすいどう", "水道"], ["131ばんすいどう", "水道"], ["キナギタウン", "町"], ["132ばんすいどう", "水道"], ["133ばんすいどう", "水道"], ["134ばんすいどう", "水道"], ["サイユウシティ", "町"], ["チャンピオンロード", "ダンジョン"], ["ポケモンリーグ", "施設"], ["そらのはしら", "ダンジョン"], ["バトルフロンティア", "施設"]];
 LOC.push(...[["103ばんどうろ", "追加エリア"], ["105ばんすいどう", "追加エリア"], ["106ばんすいどう", "追加エリア"], ["107ばんすいどう", "追加エリア"], ["108ばんすいどう", "追加エリア"], ["109ばんすいどう", "追加エリア"], ["115ばんどうろ", "追加エリア"], ["122ばんすいどう", "追加エリア"], ["123ばんどうろ", "追加エリア"], ["ニューキンセツ", "追加エリア"], ["すてられぶね", "追加エリア"], ["サファリゾーン", "追加エリア"], ["さばく", "追加エリア"], ["さばくいせき", "追加エリア"], ["こじまのよこあな", "追加エリア"], ["こだいづか", "追加エリア"], ["みなみのことう", "追加エリア"], ["アトリエのあな", "追加エリア"]]);
 const FLOW=["ミシロタウンで冒険開始", "101ばんどうろを抜けコトキタウンへ", "102ばんどうろ→トウカシティ", "104ばんどうろ→トウカのもり→カナズミシティ", "カナズミジム：ツツジ", "116ばんどうろ・カナシダトンネル", "ムロタウンへ渡る", "ムロジム：トウキ", "いしのどうくつでイベント", "カイナシティへ", "110ばんどうろ→キンセツシティ", "キンセツジム：テッセン", "117ばんどうろ・シダケタウン", "111・112ばんどうろ→ほのおのぬけみち", "113ばんどうろ→ハジツゲタウン", "114ばんどうろ→りゅうせいのたき", "えんとつやま→デコボコさんどう", "フエンタウンジム：アスナ", "トウカシティジム：センリ", "118・119ばんどうろ", "ヒワマキシティジム：ナギ", "120・121ばんどうろ→ミナモシティ", "おくりびやま", "マグマ団アジト", "アクア団アジト", "トクサネシティジム：フウ＆ラン", "かいていどうくつ", "ルネシティ・そらのはしら関連イベント", "ルネシティジム：アダン", "サイユウシティ→チャンピオンロード", "四天王・チャンピオン", "殿堂入り後・バトルフロンティア"];
+
+const RAIN_BASE='https://rainsibu.net/pokemon_GBA/Emerald/Scenario/';
+const SPECIAL_PAGE={
+'ミシロタウン':'map_misiro.html','コトキタウン':'map_kotoki.html','トウカシティ':'map_touka.html',
+'カナズミシティ':'map_kanazumi.html','ムロタウン':'map_muro.html','カイナシティ':'map_kaina.html',
+'キンセツシティ':'map_kinsetu.html','シダケタウン':'map_sidake.html','ハジツゲタウン':'map_hajituke.html',
+'フエンタウン':'map_huen.html','ヒワマキシティ':'map_hiwamaki.html','ミナモシティ':'map_minamo.html',
+'トクサネシティ':'map_tokusa.html','ルネシティ':'map_rune.html','サイユウシティ':'map_saiyuu.html',
+'トウカのもり':'map_toukanomori.html','いしのどうくつ':'map_isinodoukutu.html',
+'カナシダトンネル':'map_kanasida.html','えんとつやま':'map_entotuyama.html',
+'おくりびやま':'map_okuribiyama.html','ニューキンセツ':'map_newkinsetu.html',
+'すてられぶね':'map_suterarebune.html','そらのはしら':'map_soranohasira.html',
+'チャンピオンロード':'map_championroad.html','かいていどうくつ':'map_kaiteidoukutu.html',
+'あさせのほらあな':'map_asase.html','アクア団アジト':'map_aqua.html','マグマ団アジト':'map_magma.html',
+'サファリゾーン':'map_safari.html','バトルフロンティア':'map_battlefrontier.html'
+};
+function sourcePage(n){
+ let m=n.match(/^(\d{3})ばん(どうろ|すいどう)$/); if(m)return RAIN_BASE+'map_'+m[1]+'.html';
+ return SPECIAL_PAGE[n]?RAIN_BASE+SPECIAL_PAGE[n]:'https://rainsibu.net/pokemon_GBA/Emerald/e_menu.html';
+}
+
 const GUIDE_DB={"ミシロタウン": {"kind": "町", "summary": "主人公の家、オダマキ研究所。冒険の出発地点。", "next": ["101ばんどうろ"]}, "101ばんどうろ": {"kind": "道路", "summary": "ミシロタウンとコトキタウンを結ぶ最初の道路。序盤の野生ポケモン捕獲に向く。", "next": ["ミシロタウン", "コトキタウン"]}, "コトキタウン": {"kind": "町", "summary": "最初に立ち寄る町。フレンドリィショップとポケモンセンターを利用できる。", "next": ["101ばんどうろ", "102ばんどうろ", "103ばんどうろ"]}, "102ばんどうろ": {"kind": "道路", "summary": "トウカシティへ続く道路。ラルトスなど序盤の捕獲候補を探せる。", "next": ["コトキタウン", "トウカシティ"]}, "103ばんどうろ": {"kind": "道路", "summary": "序盤のライバル戦がある道路。後半は110番道路側からもアクセス可能。", "items": ["エフェクトガード", "ポイントアップ", "クラボのみ", "ヒメリのみ"], "next": ["コトキタウン", "110ばんどうろ"]}, "トウカシティ": {"kind": "町", "summary": "センリのジムがある町。序盤に訪れるがジム攻略は中盤。", "next": ["102ばんどうろ", "104ばんどうろ"]}, "104ばんどうろ": {"kind": "道路", "summary": "トウカのもりを挟んで南北に分かれる道路。", "next": ["トウカシティ", "トウカのもり", "カナズミシティ"]}, "トウカのもり": {"kind": "ダンジョン", "summary": "104番道路をつなぐ森林。デボン社員に関するイベントが進む。", "next": ["104ばんどうろ"]}, "カナズミシティ": {"kind": "町", "summary": "最初のジムがある大きな町。デボンコーポレーションがある。", "next": ["104ばんどうろ", "116ばんどうろ"]}, "116ばんどうろ": {"kind": "道路", "summary": "カナズミ東側。カナシダトンネルへ続く。", "next": ["カナズミシティ", "カナシダトンネル"]}, "カナシダトンネル": {"kind": "ダンジョン", "summary": "カナズミ側とシダケ側を結ぶトンネル。ストーリーイベントあり。", "next": ["116ばんどうろ", "シダケタウン"]}, "ムロタウン": {"kind": "町", "summary": "2つ目のジムがある島の町。いしのどうくつへ向かう拠点。", "next": ["いしのどうくつ"]}, "いしのどうくつ": {"kind": "ダンジョン", "summary": "ムロタウン北西の洞窟。ダイゴへの手紙イベント。", "next": ["ムロタウン"]}, "カイナシティ": {"kind": "町", "summary": "市場、コンテスト関連施設、海の科学博物館などがある港町。", "next": ["109ばんすいどう", "110ばんどうろ"]}, "110ばんどうろ": {"kind": "道路", "summary": "カイナとキンセツを結ぶ道路。サイクリングロードとライバル戦。", "next": ["カイナシティ", "キンセツシティ", "103ばんどうろ"]}, "キンセツシティ": {"kind": "町", "summary": "3つ目のジム。自転車入手や各方面への分岐点となる。", "next": ["110ばんどうろ", "111ばんどうろ", "117ばんどうろ"]}, "117ばんどうろ": {"kind": "道路", "summary": "キンセツとシダケを結ぶ花畑の道路。育て屋がある。", "items": ["スーパーボール", "げんきのかけら", "むしよけスプレー"], "next": ["キンセツシティ", "シダケタウン"]}, "シダケタウン": {"kind": "町", "summary": "117番道路西端。カナシダトンネル側へ接続。", "next": ["117ばんどうろ", "カナシダトンネル"]}, "111ばんどうろ": {"kind": "道路", "summary": "砂漠と山岳方面へ伸びる長い道路。", "next": ["キンセツシティ", "112ばんどうろ"]}, "112ばんどうろ": {"kind": "道路", "summary": "えんとつやま方面への入口。", "next": ["111ばんどうろ", "ほのおのぬけみち"]}, "ほのおのぬけみち": {"kind": "ダンジョン", "summary": "112番道路の火山洞窟。", "next": ["112ばんどうろ"]}, "113ばんどうろ": {"kind": "道路", "summary": "火山灰が積もる道路。ハジツゲタウンへ続く。", "next": ["ハジツゲタウン"]}, "ハジツゲタウン": {"kind": "町", "summary": "火山灰地域の町。114番道路へ続く。", "next": ["113ばんどうろ", "114ばんどうろ"]}, "114ばんどうろ": {"kind": "道路", "summary": "ハジツゲからりゅうせいのたきへ向かう道路。", "next": ["ハジツゲタウン", "りゅうせいのたき"]}, "りゅうせいのたき": {"kind": "ダンジョン", "summary": "ストーリーと終盤探索の両方で訪れる洞窟。", "next": ["114ばんどうろ", "115ばんどうろ"]}, "115ばんどうろ": {"kind": "道路", "summary": "カナズミ北方の海岸道路。なみのり後に探索範囲が広がる。", "items": ["いいキズぐすり", "ブロムヘキシン", "スーパーボール", "ポイントアップ", "ハートのウロコ", "わざマシン01"], "next": ["カナズミシティ", "りゅうせいのたき"]}, "えんとつやま": {"kind": "ダンジョン", "summary": "マグマ団とのイベントが起こる火山。", "items": ["いんせき", "フエンせんべい"], "next": ["デコボコさんどう"]}, "デコボコさんどう": {"kind": "道路", "summary": "えんとつやまからフエンタウン方面へ下る山道。", "next": ["フエンタウン"]}, "フエンタウン": {"kind": "町", "summary": "4つ目のジムと温泉がある町。", "next": ["デコボコさんどう"]}, "118ばんどうろ": {"kind": "道路", "summary": "なみのり入手後に東へ進む重要ルート。", "items": ["ハートのウロコ", "ブロムヘキシン", "オボンのみ", "すごいキズぐすり", "いいつりざお"], "next": ["119ばんどうろ", "123ばんどうろ"]}, "119ばんどうろ": {"kind": "道路", "summary": "長い草むらと天気研究所がある道路。ヒワマキへ続く。", "next": ["118ばんどうろ", "ヒワマキシティ"]}, "ヒワマキシティ": {"kind": "町", "summary": "木の上に作られた町。6つ目のジムがある。", "next": ["119ばんどうろ", "120ばんどうろ"]}, "120ばんどうろ": {"kind": "道路", "summary": "ヒワマキ東側。見えないポケモンをどかすイベントを経て進む。", "next": ["ヒワマキシティ", "121ばんどうろ"]}, "121ばんどうろ": {"kind": "道路", "summary": "ミナモ・サファリゾーン・おくりびやま方面への分岐。", "items": ["キーのみ", "ナナシのみ", "チーゴのみ", "カゴのみ", "キトサン", "マックスアップ", "げんきのかけら", "インドメタシン", "きんのたま"], "next": ["120ばんどうろ", "ミナモシティ", "サファリゾーン", "おくりびやま"]}, "ミナモシティ": {"kind": "町", "summary": "デパートや港がある大都市。アクア団関連イベントの拠点。", "next": ["121ばんどうろ", "アクア団アジト"]}, "おくりびやま": {"kind": "ダンジョン", "summary": "墓所と山頂を持つエリア。ストーリー上の重要イベントあり。", "next": ["121ばんどうろ", "122ばんすいどう"]}, "マグマ団アジト": {"kind": "ダンジョン", "summary": "マグマ団の拠点。ストーリー進行で攻略する。"}, "アクア団アジト": {"kind": "ダンジョン", "summary": "ミナモ東側のアクア団拠点。ワープ床を使って進む。", "next": ["ミナモシティ", "124ばんすいどう"]}, "124ばんすいどう": {"kind": "水道", "summary": "ミナモとトクサを結ぶ海域。ダイビング可能地点あり。", "next": ["ミナモシティ", "トクサネシティ"]}, "トクサネシティ": {"kind": "町", "summary": "7つ目のジム、宇宙センター、すごいつりざお入手地点。", "next": ["124ばんすいどう", "125ばんすいどう", "127ばんすいどう"]}, "125ばんすいどう": {"kind": "水道", "summary": "トクサ北方。あさせのほらあなへ続く。", "next": ["トクサネシティ", "あさせのほらあな"]}, "あさせのほらあな": {"kind": "ダンジョン", "summary": "潮の満ち引きで行ける場所が変化する洞窟。かいがらのすず関連。", "next": ["125ばんすいどう"]}, "127ばんすいどう": {"kind": "水道", "summary": "トクサ南方の海域。", "next": ["トクサネシティ", "128ばんすいどう"]}, "128ばんすいどう": {"kind": "水道", "summary": "サイユウ方面と海底洞窟方面への分岐海域。", "next": ["127ばんすいどう", "サイユウシティ", "かいていどうくつ"]}, "かいていどうくつ": {"kind": "ダンジョン", "summary": "ダイビングで侵入する終盤ダンジョン。岩押し・潮流ギミックあり。", "items": ["わざマシン26「じしん」"], "next": ["128ばんすいどう"]}, "ルネシティ": {"kind": "町", "summary": "火口湖の町。8つ目のジムと終盤ストーリーの中心。", "next": ["126ばんすいどう"]}, "126ばんすいどう": {"kind": "水道", "summary": "ルネシティを囲む海域。ダイビングで街へ入る。", "next": ["ルネシティ"]}, "サイユウシティ": {"kind": "町", "summary": "ポケモンリーグへの入口。チャンピオンロードへ進む。", "next": ["128ばんすいどう", "チャンピオンロード"]}, "チャンピオンロード": {"kind": "ダンジョン", "summary": "ポケモンリーグ直前の大型ダンジョン。複数階層を攻略する。", "items": ["ピーピーマックス", "わざマシン29「サイコキネシス」", "ゴールドスプレー", "なんでもなおし", "かいふくのくすり"], "next": ["サイユウシティ", "ポケモンリーグ"]}, "ポケモンリーグ": {"kind": "施設", "summary": "四天王カゲツ・フヨウ・プリム・ゲンジ、そしてチャンピオンへ挑戦。"}, "そらのはしら": {"kind": "ダンジョン", "summary": "終盤ストーリーとレックウザに関係する塔。階層構造。"}, "バトルフロンティア": {"kind": "施設", "summary": "殿堂入り後の7つのバトル施設。BP、技教え、交換アイテムなどのやり込み拠点。"}, "すてられぶね": {"kind": "ダンジョン", "summary": "108番水道にある探索施設。後半はダイビングを使う。", "next": ["108ばんすいどう"]}, "サファリゾーン": {"kind": "施設", "summary": "121番道路から入る捕獲施設。通常とは異なる捕獲ルール。", "next": ["121ばんどうろ"]}, "ニューキンセツ": {"kind": "ダンジョン", "summary": "キンセツ関連イベントで訪れる発電施設。"}, "タイドリップごう": {"kind": "施設", "summary": "殿堂入り後に利用できる船。船内トレーナーやアイテムがある。", "items": ["わざマシン49「よこどり」", "たべのこし"]}};
 const DEX_NAMES=["キモリ", "ジュプトル", "ジュカイン", "アチャモ", "ワカシャモ", "バシャーモ", "ミズゴロウ", "ヌマクロー", "ラグラージ", "ポチエナ", "グラエナ", "ジグザグマ", "マッスグマ", "ケムッソ", "カラサリス", "アゲハント", "マユルド", "ドクケイル", "ハスボー", "ハスブレロ", "ルンパッパ", "タネボー", "コノハナ", "ダーテング", "スバメ", "オオスバメ", "キャモメ", "ペリッパー", "ラルトス", "キルリア", "サーナイト", "アメタマ", "アメモース", "キノココ", "キノガッサ", "ナマケロ", "ヤルキモノ", "ケッキング", "ケーシィ", "ユンゲラー", "フーディン", "ツチニン", "テッカニン", "ヌケニン", "ゴニョニョ", "ドゴーム", "バクオング", "マクノシタ", "ハリテヤマ", "トサキント", "アズマオウ", "コイキング", "ギャラドス", "ルリリ", "マリル", "マリルリ", "イシツブテ", "ゴローン", "ゴローニャ", "ノズパス", "エネコ", "エネコロロ", "ズバット", "ゴルバット", "クロバット", "メノクラゲ", "ドククラゲ", "ヤミラミ", "クチート", "ココドラ", "コドラ", "ボスゴドラ", "ワンリキー", "ゴーリキー", "カイリキー", "アサナン", "チャーレム", "ラクライ", "ライボルト", "プラスル", "マイナン", "コイル", "レアコイル", "ビリリダマ", "マルマイン", "バルビート", "イルミーゼ", "ナゾノクサ", "クサイハナ", "ラフレシア", "キレイハナ", "ドードー", "ドードリオ", "ロゼリア", "ゴクリン", "マルノーム", "キバニア", "サメハダー", "ホエルコ", "ホエルオー", "ドンメル", "バクーダ", "マグマッグ", "マグカルゴ", "コータス", "ベトベター", "ベトベトン", "ドガース", "マタドガス", "バネブー", "ブーピッグ", "サンド", "サンドパン", "パッチール", "エアームド", "ナックラー", "ビブラーバ", "フライゴン", "サボネア", "ノクタス", "チルット", "チルタリス", "ザングース", "ハブネーク", "ルナトーン", "ソルロック", "ドジョッチ", "ナマズン", "ヘイガニ", "シザリガー", "ヤジロン", "ネンドール", "リリーラ", "ユレイドル", "アノプス", "アーマルド", "ププリン", "プリン", "プクリン", "ヒンバス", "ミロカロス", "ポワルン", "ヒトデマン", "スターミー", "カクレオン", "カゲボウズ", "ジュペッタ", "ヨマワル", "サマヨール", "トロピウス", "チリーン", "アブソル", "ロコン", "キュウコン", "ピチュー", "ピカチュウ", "ライチュウ", "コダック", "ゴルダック", "ソーナノ", "ソーナンス", "ネイティ", "ネイティオ", "キリンリキ", "ゴマゾウ", "ドンファン", "カイロス", "ヘラクロス", "サイホーン", "サイドン", "ユキワラシ", "オニゴーリ", "タマザラシ", "トドグラー", "トドゼルガ", "パールル", "ハンテール", "サクラビス", "ジーランス", "サニーゴ", "チョンチー", "ランターン", "ラブカス", "タッツー", "シードラ", "キングドラ", "タツベイ", "コモルー", "ボーマンダ", "ダンバル", "メタング", "メタグロス", "レジロック", "レジアイス", "レジスチル", "ラティアス", "ラティオス", "カイオーガ", "グラードン", "レックウザ", "ジラーチ", "デオキシス"];
 const CATALOG=[["攻略", "ゲーム開始～殿堂入り後攻略チャート", "メインストーリーの進行チェック"], ["攻略", "ホウエン地方 場所データ", "出現ポケモン・入手道具・トレーナー・イベント"], ["攻略", "殿堂入り後イベント", "クリア後のやり込み確認"], ["マップ", "ダンジョン全体マップ", "森・洞窟・山・アジト・海底・チャンピオンロード等"], ["マップ", "124～128番水道", "海上・水中エリアの確認"], ["ジム", "8ジム攻略", "ツツジ～アダン"], ["リーグ", "ポケモンリーグ", "カゲツ・フヨウ・プリム・ゲンジ・チャンピオン"], ["BF", "バトルフロンティア概要", "BP交換・各施設・フロンティアブレーン"], ["BF", "バトルタワー", "連勝型施設"], ["BF", "バトルドーム", "トーナメント施設"], ["BF", "バトルファクトリー", "レンタルポケモン施設"], ["BF", "バトルチューブ", "進路選択型施設"], ["BF", "バトルアリーナ", "判定ルール施設"], ["BF", "バトルパレス", "ポケモンの性格を利用する施設"], ["BF", "バトルピラミッド", "探索型施設"], ["道具", "回復", "回復系アイテム"], ["道具", "持たせる道具", "ポケモンに持たせるアイテム"], ["道具", "モンスターボール", "捕獲用ボール"], ["道具", "能力アップ", "能力関連アイテム"], ["道具", "進化どうぐ", "進化に使う道具"], ["道具", "換金・交換・その他", "その他の一般道具"], ["道具", "メール", "メールアイテム"], ["道具", "きのみ", "きのみデータ"], ["道具", "たいせつなもの", "ストーリー用重要アイテム"], ["道具", "もようがえグッズ", "ひみつきち等のグッズ"], ["道具", "わざ/ひでんマシン", "TM/HM"], ["ポケモン", "第3世代ポケモン検索", "図鑑・タイプ・データ検索"], ["ポケモン", "技一覧", "第3世代の技データ"], ["ポケモン", "技教え/BF技", "技教え人とBP技"], ["ポケモン", "特性", "第3世代の特性"], ["ポケモン", "交換の制限", "通信交換関連"], ["ポケモン", "特別なタマゴ", "特殊なタマゴ入手"], ["ポケモン", "伝説・特別ポケモン", "特殊入手ポケモン"], ["ポケモン", "点字・レジ系", "レジロック・レジアイス・レジスチル関連"], ["その他", "エントリーコール", "登録・連絡データ"], ["その他", "トレーナーカード★条件", "達成条件"], ["その他", "再戦可能トレーナー/ジム", "再戦データ"], ["その他", "エニシダに会える場所", "エニシダ関連"], ["その他", "小ネタ", "補足・小ネタ"]];
@@ -92,35 +119,83 @@ function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;',
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));document.getElementById(b.dataset.page).classList.add('on');b.classList.add('on')})
 function renderLocations(){
  let q=document.getElementById('locSearch').value.toLowerCase(),f=document.getElementById('locFilter').value;
- document.getElementById('locationList').innerHTML=LOC.map((x,i)=>({n:x[0],t:(GUIDE_DB[x[0]]?.kind||x[1]),i})).filter(x=>(f==='すべて'||x.t===f||x[1]===f)&&x.n.toLowerCase().includes(q)).map(x=>`<div class="item"><input class="check" type="checkbox" ${S.locations[x.i]?'checked':''} onchange="S.locations[${x.i}]=this.checked;save()"><button class="ghost grow" style="text-align:left" onclick="openLocation('${x.n.replace(/'/g,"\\'")}')"><b>${esc(x.n)}</b><div class="muted">${esc(GUIDE_DB[x.n]?.summary||'場所データを確認')}</div></button><span class="tag">${esc(x.t)}</span></div>`).join('')
+ document.getElementById('locationList').innerHTML=LOC.map((x,i)=>({n:x[0],t:(GUIDE_DB[x[0]]?.kind||x[1]),i}))
+ .filter(x=>(f==='すべて'||x.t===f||x[1]===f)&&x.n.toLowerCase().includes(q))
+ .map(x=>`<button class="item" style="width:100%;color:inherit;text-align:left;background:#fff" onclick="openLocation('${x.n.replace(/'/g,"\\'")}')">
+ <div class="grow"><b style="color:var(--g)">${esc(x.n)}</b><div class="muted">${esc(GUIDE_DB[x.n]?.summary||'マップ・出現ポケモン・トレーナー・道具・攻略ポイントを確認')}</div></div><span class="tag">${esc(x.t)}</span></button>`).join('')
 }
 function openLocation(n){
  let d=GUIDE_DB[n]||{}; detailTitle.textContent=n;
  let items=(d.items||[]).map(x=>`<span class="tag" style="display:inline-block;margin:3px">${esc(x)}</span>`).join('');
  let next=(d.next||[]).map(x=>`<button class="ghost" style="margin:3px" onclick="openLocation('${x.replace(/'/g,"\\'")}')">${esc(x)}</button>`).join('');
- detailBody.innerHTML=`<p>${esc(d.summary||'攻略データ')}</p>${items?'<h3>主な入手物</h3>'+items:''}${next?'<h3>接続・次の場所</h3>'+next:''}<h3>自分用メモ</h3><textarea id="locMemo" placeholder="この場所のメモ"></textarea>`;
- let k='locMemo:'+n; locMemo.value=S[k]||'';locMemo.oninput=e=>{S[k]=e.target.value;save()};detailModal.style.display='block'
+ let src=sourcePage(n);
+ detailBody.innerHTML=`<p>${esc(d.summary||'エメラルド攻略エリア')}</p>
+ <div class="tabs"><button onclick="showLocTab('map','${src}')">🗺 マップ・攻略画像</button><button class="ghost" onclick="showLocTab('local','${src}')">要点</button><button class="ghost" onclick="window.open('${src}','_blank')">元攻略資料↗</button></div>
+ <div id="locVisual"><iframe class="mapframe" loading="lazy" src="${src}"></iframe><p class="muted">原攻略資料をアプリ内表示。全体マップ、出現ポケモン、トレーナー、拾える道具、攻略ポイントを同じ画面で確認できます。</p></div>
+ <div id="locLocal" style="display:none">${items?'<h3>主な入手物</h3>'+items:''}${next?'<h3>接続・次の場所</h3>'+next:''}<h3>自分用メモ</h3><textarea id="locMemo" placeholder="この場所のメモ"></textarea></div>`;
+ let k='locMemo:'+n; setTimeout(()=>{if(window.locMemo){locMemo.value=S[k]||'';locMemo.oninput=e=>{S[k]=e.target.value;save()}}},0);
+ detailModal.style.display='block'
+}
+function showLocTab(t,src){
+ locVisual.style.display=t==='map'?'block':'none';locLocal.style.display=t==='local'?'block':'none'
 }
 function closeDetail(){detailModal.style.display='none'}
 function renderFlow(){
- document.getElementById('flowList').innerHTML=FLOW.map((x,i)=>`<label class="item"><input class="check" type="checkbox" ${S.flow[i]?'checked':''} onchange="S.flow[${i}]=this.checked;save()"><div><span class="tag">STEP ${i+1}</span> <b>${esc(x)}</b></div></label>`).join('')
- document.getElementById('gymList').innerHTML=GYMS.map((x,i)=>`<label class="item"><input class="check" type="checkbox" ${S.badges[i]?'checked':''} onchange="S.badges[${i}]=this.checked;save()"><div class="grow"><b>${esc(x[0])}</b><div class="muted">${esc(x[1])}</div></div><span class="tag">${esc(x[2])}</span></label>`).join('')
+ document.getElementById('flowList').innerHTML=FLOW.map((x,i)=>{
+   let loc=LOC.find(z=>x.includes(z[0]))?.[0]||'';
+   return `<div class="flowCard"><div><span class="flowNum">STEP ${i+1}</span><b>${esc(x)}</b></div>
+   <div class="row" style="margin-top:10px">${loc?`<button onclick="openLocation('${loc.replace(/'/g,"\\'")}')">🗺 マップ・画像で確認</button>`:''}
+   <button class="ghost" onclick="window.open('https://rainsibu.net/pokemon_GBA/Emerald/chart.html','_blank')">詳しい攻略↗</button></div></div>`
+ }).join('');
+ document.getElementById('gymList').innerHTML=GYMS.map((x,i)=>`<div class="item"><div class="grow"><b>${esc(x[0])}</b><div class="muted">${esc(x[1])}</div></div><span class="tag">${esc(x[2])}</span></div>`).join('')
 }
+let HOENN_IDS=[];
+const JP_TYPE={normal:'ノーマル',fire:'ほのお',water:'みず',electric:'でんき',grass:'くさ',ice:'こおり',fighting:'かくとう',poison:'どく',ground:'じめん',flying:'ひこう',psychic:'エスパー',bug:'むし',rock:'いわ',ghost:'ゴースト',dragon:'ドラゴン',dark:'あく',steel:'はがね'};
+async function initHoennDex(){
+ try{
+  let r=await fetch('https://pokeapi.co/api/v2/pokedex/4/');let d=await r.json();
+  HOENN_IDS=d.pokemon_entries.sort((a,b)=>a.entry_number-b.entry_number).map(e=>Number(e.pokemon_species.url.match(/\/(\d+)\/$/)[1]));
+ }catch(e){HOENN_IDS=[]}
+ renderDex()
+}
+function natId(i){return HOENN_IDS[i-1]||i}
+function spriteFor(i){let id=natId(i);return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iii/emerald/${id}.png`}
 function renderDex(){
  let q=document.getElementById('dexSearch').value.trim().toLowerCase(),f=document.getElementById('dexFilter').value;
- let arr=[]; for(let i=1;i<=202;i++){let c=!!S.caught[i],n=DEX_NAMES[i-1]||''; if(f==='caught'&&!c||f==='uncaught'&&c)continue;if(q && !String(i).includes(q)&&!n.toLowerCase().includes(q))continue;arr.push(i)}
- document.getElementById('dexGrid').innerHTML=arr.map(i=>`<div class="poke ${S.caught[i]?'caught':''}"><button onclick="event.stopPropagation();S.caught[${i}]=!S.caught[${i}];save();renderDex()">${S.caught[i]?'✓':'＋'}</button><div onclick="openPokemon(${i})"><img loading="lazy" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iii/emerald/${i}.png" onerror="this.style.opacity=.15"><div class="num">No.${String(i).padStart(3,'0')}</div><b>${esc(DEX_NAMES[i-1])}</b></div></div>`).join('')
+ let arr=[]; for(let i=1;i<=202;i++){let c=!!S.caught[i],n=DEX_NAMES[i-1]||''; if(f==='caught'&&!c||f==='uncaught'&&c)continue;if(q&&!String(i).includes(q)&&!n.toLowerCase().includes(q))continue;arr.push(i)}
+ document.getElementById('dexGrid').innerHTML=arr.map(i=>`<div class="poke ${S.caught[i]?'caught':''}"><button onclick="event.stopPropagation();S.caught[${i}]=!S.caught[${i}];save();renderDex()">${S.caught[i]?'✓':'＋'}</button><div onclick="openPokemon(${i})"><img loading="lazy" src="${spriteFor(i)}" onerror="this.style.opacity=.15"><div class="num">No.${String(i).padStart(3,'0')}</div><b>${esc(DEX_NAMES[i-1])}</b></div></div>`).join('')
 }
-function openPokemon(i){
- detailTitle.textContent=`No.${String(i).padStart(3,'0')} ${DEX_NAMES[i-1]}`;
- detailBody.innerHTML=`<div style="text-align:center"><img style="width:128px;height:128px;image-rendering:pixelated" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iii/emerald/${i}.png"><p><button onclick="S.caught[${i}]=!S.caught[${i}];save();renderDex();openPokemon(${i})">${S.caught[i]?'✓ 捕獲済み':'＋ 捕獲する'}</button></p></div><h3>自分用メモ</h3><textarea id="pokeMemo" placeholder="出現場所、育成、技構成など"></textarea>`;
- let k='pokeMemo:'+i;pokeMemo.value=S[k]||'';pokeMemo.oninput=e=>{S[k]=e.target.value;save()};detailModal.style.display='block'
+async function jpMove(url){
+ try{let d=await (await fetch(url)).json();return d.names.find(x=>x.language.name==='ja-Hrkt')?.name||d.names.find(x=>x.language.name==='ja')?.name||d.name}catch(e){return '技'}
+}
+async function openPokemon(i){
+ let id=natId(i),name=DEX_NAMES[i-1];detailTitle.textContent=`No.${String(i).padStart(3,'0')} ${name}`;
+ detailBody.innerHTML=`<div class="loading">エメラルドの攻略データを読み込み中…</div>`;detailModal.style.display='block';
+ try{
+  let [pk,enc]=await Promise.all([fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`).then(r=>r.json()),fetch(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`).then(r=>r.json())]);
+  let types=pk.types.map(x=>JP_TYPE[x.type.name]||x.type.name).join(' / ');
+  let ability=pk.abilities.map(x=>x.ability.name).join(' / ');
+  let levelMoves=[];
+  pk.moves.forEach(m=>m.version_group_details.filter(v=>v.version_group.name==='emerald'&&v.move_learn_method.name==='level-up').forEach(v=>levelMoves.push({lv:v.level_learned_at,url:m.move.url,en:m.move.name})));
+  levelMoves.sort((a,b)=>a.lv-b.lv);
+  let moveNames=await Promise.all(levelMoves.map(x=>jpMove(x.url)));
+  let moves=levelMoves.map((x,k)=>`<tr><td>Lv.${x.lv}</td><td>${esc(moveNames[k])}</td></tr>`).join('');
+  let emeraldEnc=enc.map(e=>({loc:e.location_area.name,vers:e.version_details.filter(v=>v.version.name==='emerald')})).filter(e=>e.vers.length);
+  let locs=emeraldEnc.map(e=>`<div class="item"><div class="grow"><b>${esc(e.loc.replaceAll('-',' '))}</b><div class="muted">${e.vers.flatMap(v=>v.encounter_details).map(z=>`Lv.${z.min_level}${z.max_level!==z.min_level?'〜'+z.max_level:''} / ${z.chance}%`).join('・')}</div></div></div>`).join('');
+  detailBody.innerHTML=`<div style="text-align:center"><img style="width:144px;height:144px;image-rendering:pixelated" src="${spriteFor(i)}"><p><span class="tag">${types}</span></p><button onclick="S.caught[${i}]=!S.caught[${i}];save();renderDex();openPokemon(${i})">${S.caught[i]?'✓ 捕獲済み':'＋ 捕獲する'}</button></div>
+  <h3>基本攻略データ</h3><table class="infoTable"><tr><th>全国図鑑</th><td>No.${id}</td></tr><tr><th>タイプ</th><td>${types}</td></tr><tr><th>特性</th><td>${esc(ability)}</td></tr><tr><th>HP/攻撃/防御</th><td>${pk.stats.slice(0,3).map(x=>x.base_stat).join(' / ')}</td></tr></table>
+  <h3>エメラルド：レベルで覚える技</h3><table class="infoTable"><tr><th>レベル</th><th>技</th></tr>${moves||'<tr><td colspan="2">レベル技なし</td></tr>'}</table>
+  <h3>エメラルドでの出現場所</h3>${locs||'<div class="card muted">野生出現なし／特殊入手・進化・交換などを確認してください。</div>'}
+  <p><button class="ghost" onclick="window.open('https://rainsibu.net/pokemon_GBA/Emerald/e_menu.html','_blank')">進化・特殊入手・技マシン等の攻略資料↗</button></p>
+  <h3>自分用メモ</h3><textarea id="pokeMemo" placeholder="捕獲場所、育成、技構成など"></textarea>`;
+  let k='pokeMemo:'+i;pokeMemo.value=S[k]||'';pokeMemo.oninput=e=>{S[k]=e.target.value;save()}
+ }catch(e){detailBody.innerHTML=`<div class="card">オンライン攻略データを読み込めませんでした。通信状態を確認してください。</div>`}
 }
 function updateStats(){
- let fc=Object.values(S.flow).filter(Boolean).length,bc=Object.values(S.badges).filter(Boolean).length,cc=Object.values(S.caught).filter(Boolean).length,lc=Object.values(S.locations).filter(Boolean).length;
+ let fc=0,bc=0,cc=Object.values(S.caught).filter(Boolean).length,lc=0;
  flowCount.textContent=fc;badgeCount.textContent=bc;caughtCount.textContent=cc;locCount.textContent=lc;if(document.getElementById('locTotal'))locTotal.textContent=LOC.length;
- let p=Math.round(((fc/FLOW.length)+(bc/8)+(cc/202)+(lc/LOC.length))/4*100);overall.textContent=p;overallBar.style.width=p+'%';
- let ni=FLOW.findIndex((_,i)=>!S.flow[i]);nextTask.textContent=ni<0?'メイン攻略完了！殿堂入り後を楽しもう。':'NEXT：'+FLOW[ni]
+ let p=Math.round((cc/202)*100);overall.textContent=p;overallBar.style.width=p+'%';
+ nextTask.textContent='図鑑の捕獲率を表示中。攻略は「攻略」タブから確認できます。'
 }
 quickMemo.value=S.quickMemo;mainMemo.value=S.mainMemo;
 quickMemo.oninput=e=>{S.quickMemo=e.target.value;save()};mainMemo.oninput=e=>{S.mainMemo=e.target.value;save()}
@@ -128,7 +203,7 @@ locSearch.oninput=renderLocations;locFilter.onchange=renderLocations;dexSearch.o
 function backup(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,2)],{type:'application/json'}));a.download='emerald-guide-backup.json';a.click();URL.revokeObjectURL(a.href)}
 restoreFile.onchange=e=>{let r=new FileReader();r.onload=()=>{try{S=JSON.parse(r.result);save();renderLocations();renderFlow();renderDex();quickMemo.value=S.quickMemo||'';mainMemo.value=S.mainMemo||'';alert('復元しました')}catch(_ ){alert('バックアップファイルを読み込めません')}};r.readAsText(e.target.files[0])}
 function resetAll(){if(confirm('攻略・捕獲・メモをすべて初期化しますか？')){localStorage.removeItem(KEY);location.reload()}}
-renderLocations();renderFlow();renderDex();renderCatalog();updateStats();
+renderLocations();renderFlow();renderDex();renderCatalog();updateStats();initHoennDex();
 
 function renderCatalog(){
  let q=(document.getElementById('dbSearch')?.value||'').toLowerCase();
