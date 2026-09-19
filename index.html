@@ -192,10 +192,7 @@ async function initHoennDex(){
    HOENN_IDS=d.pokemon_entries.slice().sort((a,b)=>a.entry_number-b.entry_number)
      .map(x=>Number(x.pokemon_species.url.match(/\/(\d+)\/$/)?.[1]||0));
    renderDex();
- }catch(e){
-   // Keep UI usable even if mapping service is temporarily unavailable.
-   document.getElementById('dexGrid').innerHTML='<div class="notice">図鑑画像データを読み込めませんでした。通信を確認して再読み込みしてください。</div>';
- }
+ }catch(e){ /* offline: keep the local Pokédex visible */ }
 }
 
 const DEX_LOCAL={"1": {"types": ["くさ"], "stats": [40, 45, 35, 65, 55, 70], "abilities": [["しんりょく", "HPが1/3以下になると、くさタイプの技の威力が上がる。"]], "moves": [[1, "はたく"], [1, "にらみつける"], [6, "すいとる"], [11, "でんこうせっか"], [16, "れんぞくぎり"], [21, "おいうち"], [26, "いやなおと"], [31, "リーフブレード"], [36, "こうそくいどう"], [41, "たたきつける"], [46, "みきり"], [51, "ギガドレイン"]], "places": ["最初の3匹から選ぶ"]}, "2": {"types": ["くさ"], "abilities": [["しんりょく", "HPが1/3以下になると、くさタイプの技の威力が上がる。"]], "moves": [[1, "はたく"], [1, "にらみつける"], [6, "すいとる"], [11, "でんこうせっか"], [16, "れんぞくぎり"], [17, "おいうち"], [23, "いやなおと"], [29, "リーフブレード"], [35, "こうそくいどう"], [41, "たたきつける"], [47, "みきり"], [53, "みねうち"]], "places": ["キモリをLv.16で進化"]}, "3": {"types": ["くさ"], "abilities": [["しんりょく", "HPが1/3以下になると、くさタイプの技の威力が上がる。"]], "moves": [[1, "はたく"], [1, "にらみつける"], [6, "すいとる"], [11, "でんこうせっか"], [16, "れんぞくぎり"], [17, "おいうち"], [23, "いやなおと"], [29, "リーフブレード"], [35, "こうそくいどう"], [43, "たたきつける"], [51, "みきり"], [59, "みねうち"]], "places": ["ジュプトルをLv.36で進化"]}, "38": {"types": ["ノーマル"], "stats": [150, 160, 100, 95, 65, 100], "abilities": [["なまけ", "2ターンに1回しか行動できない。"]], "places": ["ヤルキモノをLv.36で進化"]}, "39": {"types": ["エスパー"], "stats": [25, 20, 15, 105, 55, 90], "abilities": [["シンクロ", "どく・まひ・やけどになった時、相手も同じ状態異常にすることがある。"], ["せいしんりょく", "ひるまない。"]], "moves": [[1, "テレポート"], [16, "ねんりき"], [18, "かなしばり"], [21, "サイケこうせん"], [23, "リフレクター"], [25, "じこさいせい"]], "places": ["116ばんどうろ", "いしのどうくつ"]}, "40": {"types": ["エスパー"], "abilities": [["シンクロ", "状態異常を相手にも返すことがある。"], ["せいしんりょく", "ひるまない。"]], "places": ["ケーシィをLv.16で進化"]}, "41": {"types": ["エスパー"], "stats": [55, 50, 45, 135, 85, 120], "abilities": [["シンクロ", "状態異常を相手にも返すことがある。"], ["せいしんりょく", "ひるまない。"]], "moves": [[1, "ねんりき"], [1, "スプーンまげ"], [1, "テレポート"], [16, "ねんりき"], [18, "かなしばり"], [21, "サイケこうせん"], [23, "リフレクター"], [25, "じこさいせい"]], "places": ["ユンゲラーを通信交換で進化"]}};
@@ -316,12 +313,42 @@ function renderTypeCheckerFor(aid,bid,rid){
  out.innerHTML=`<h3>${d1}${d2?' / '+d2:''}</h3>${row(4,'非常に弱い')}${row(2,'弱点')}${row(.5,'半減')}${row(.25,'1/4')}${row(0,'無効')}`;
 }
 function renderTypeChecker(){ renderTypeCheckerFor('type1','type2','typeResult'); }
-function renderTypeChecker(){
- let d1=type1.value,d2=type2.value;if(d1===d2)d2='';
- let groups={4:[],2:[],1:[],0.5:[],0.25:[],0:[]};
- GEN3_TYPES.forEach(at=>{let m=GEN3_CHART[at][d1]*(d2?GEN3_CHART[at][d2]:1);(groups[m]||(groups[m]=[])).push(at)});
- let row=(m,label)=>groups[m].length?`<div class="item"><span class="tag">×${m}</span><div class="grow"><b>${label}</b><div>${groups[m].map(x=>`<span class="tag" style="margin:3px;display:inline-block">${x}</span>`).join('')}</div></div></div>`:'';
- typeResult.innerHTML=`<h3>${d1}${d2?' / '+d2:''} の防御相性</h3>${row(4,'非常に弱い')}${row(2,'弱点')}${row(1,'等倍')}${row(.5,'半減')}${row(.25,'1/4')}${row(0,'無効')}`;
+
+
+function bootEmeraldGuide(){
+  // Explicit element refs: do not depend on Safari creating globals from element IDs.
+  window.detailModal=document.getElementById('detailModal');
+  window.detailTitle=document.getElementById('detailTitle');
+  window.detailBody=document.getElementById('detailBody');
+
+  const locSearch=document.getElementById('locSearch');
+  const locFilter=document.getElementById('locFilter');
+  const dexSearch=document.getElementById('dexSearch');
+  const dexFilter=document.getElementById('dexFilter');
+  if(locSearch) locSearch.oninput=renderLocations;
+  if(locFilter) locFilter.onchange=renderLocations;
+  if(dexSearch) dexSearch.oninput=renderDex;
+  if(dexFilter) dexFilter.onchange=renderDex;
+
+  const ov=document.getElementById('hoennOverview');
+  if(ov) ov.innerHTML=hoennOverview();
+
+  renderLocations();
+  renderDex();
+  renderFlow();
+  renderCatalog();
+  initTypeChecker();
+  updateStats();
+
+  // Correct Hoenn->National sprite mapping is an enhancement only.
+  // The visible UI never waits for this request.
+  initHoennDex().catch(()=>{});
 }
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',bootEmeraldGuide,{once:true});
+}else{
+  bootEmeraldGuide();
+}
+
 </script><div id="detailModal" style="display:none;position:fixed;inset:0;z-index:30;background:#0008;padding:calc(env(safe-area-inset-top) + 18px) 14px calc(env(safe-area-inset-bottom) + 18px);overflow:auto">
 <div class="card" style="max-width:720px;margin:auto"><div class="row"><h2 id="detailTitle" class="grow" style="margin:0"></h2><button class="ghost" onclick="closeDetail()">閉じる</button></div><div id="detailBody"></div></div></div></body></html>
